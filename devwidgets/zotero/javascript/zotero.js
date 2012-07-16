@@ -48,6 +48,7 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         var $settingsContainer = $("#zotero_settings", $rootel);
         var $settingsForm = $("#zotero_settings_form", $rootel);
         var $cancelSettings = $("#zotero_cancel_settings", $rootel);
+        var $saveSettings = $("#zotero_save_settings", $rootel);
         var $userID = $("#zotero_user_id", $rootel);
         var $userKey = $("#zotero_user_key", $rootel);
         var $userIdText = $("#zotero_id_text", $rootel);
@@ -61,6 +62,7 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         var $msgErrorItems = $("#zotero_msg_error_items", $rootel);
 		var $selectedCollection;
 		var $initURL = "http://localhost:8080/var/proxy/zotero";
+		var firstLoad = true;
 
         ///////////////////////
         // Utility functions //
@@ -79,6 +81,14 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         
 
 		/**
+         * Clears all the password fields
+         */
+        var clearInputFields = function(){
+            $userID.val("");
+            $userKey.val("");
+        };
+        
+		/**
          * Gets the userID and the userKey from the server using an asynchronous request
          *
          * @param {Object} callback Function to call when the request returns. This
@@ -92,7 +102,9 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
                     callback(checkInput(data.userID), checkInput(data.userKey));
                 } else {
                     // fetching the data failed, we use the DEFAULT_INPUT
-                    callback(DEFAULT_INPUT, true);
+                    $settingsContainer.show();
+                	$settingsContainer.focus();
+                	callback(DEFAULT_INPUT, DEFAULT_INPUT);
                 }
             });
         };
@@ -106,24 +118,24 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
          * @param {String} userKey The user's key of the Zotero account.
          */
         var showItemsList = function(itemsURL, userKey) {
-        	
+        	// reset the html in the itemsContainer's node
+        	$itemsContainer.html("");
+			$msgErrorItems.css({"display":"none"});
+			$msgEmptyCollection.css({"display":"none"});
+			
 			// sending the request to the server
 			$.ajax({
 				type: "POST",
 				url: itemsURL,
 				dataType: "xml",
 				success : function(mainData, status, data) {
-					// reset the html in the itemsContainer's node
-					$itemsContainer.html("");
 					// fetching the data contained in the server's response
 					var response = data.responseXML;
 					var entries = $(response).find('entry');
 					// testing if there are items in the selected collection
-					if($(entries).length > 0) {
-						$msgErrorItems.css({"display":"none"});
-						$msgEmptyCollection.css({"display":"none"});
+					if($(entries).length > 0) {	
 						$itemsContainer.append("<ul>");
-						// fetching the entry tags to display the information it contains
+					 	// fetching the entry tags to display the information it contains
 						entries.each(function(){
 							var title = $(this).find('title').text();
 							var content = $(this).find('content').find('div');
@@ -153,15 +165,15 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
 							});
 							
 							// adding the current item fetched into the list
-							var initLi = "<li id=zotero_" + item_key + ">";
-							var arrowButton = "<div class=\"zotero_see_more_button\">" + 
+							var initLi = "<li id=zotero_" + item_key + " class=\"zotero_item_li\">";
+							var arrowButton = "<div class=\"zotero_see_more_button\" >" + 
 													"<button type=\"button\" id=\"zotero_show_more\" class=\"s3d-button s3d-link-button s3d-action\">" +
 			        									"<div class=\"zotero_useless\" id=\"zotero_see_more\"><span id=\"zotero_show_more_arrow\"></span></div>" +
 			        	 								"<div class=\"zotero_useless\" id=\"zotero_see_less\"><span id=\"zotero_show_less_arrow\" style=\"display: none;\"></span></div>" +
 			       									"</button>"+
 			       								"</div>";
 			       			var itemTitle = "<div class=\"zotero_content_title\">"+
-			       								"<a class=\"recentchangedcontent_item_link s3d-widget-links s3d-bold\" href = " + link + " onclick=\"window.open(this.href); return false;\">" + title + "</a>"
+			       								"<a id=\"zotero_title_link\" class=\"recentchangedcontent_item_link s3d-widget-links s3d-bold\" href = \"#\">" + title + "</a>"
 			       							"</div>";
 													
 							$("#zotero_items ul").append(initLi + arrowButton + itemTitle + "</li>");
@@ -177,10 +189,11 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
 							}	
 						});
 							
-						// creating event handlers on each item's arrow	
-						$itemsContainer.find("#zotero_show_more").each(function(){
+						// creating event handlers on each item
+			       		$itemsContainer.find('li').each(function(){
 							$(this).bind('click',function(event){
-								arrowsBinding(event);
+								itemsBinding(event);
+								return false;
 			       			});
 			       		});
 			       	}
@@ -331,6 +344,10 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         var appendErrorMessage = function(brotherNode, node, error) {
         	brotherNode.html("");
         	node.css({"display":"block"});
+        	var result = $(node).find('center');
+        	if(result.length > 1) {
+        		$(result[result.length-1]).remove();
+        	}
         	node.append("<center><p>"+ error +" </p></center>");
         };
         
@@ -356,50 +373,43 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
          * a click event on an item's arrow has been caught. 
          *
          * @param {Object} ev The event caught.
-         */
-        var arrowsBinding = function(ev) {
+         */      
+        var itemsBinding = function(ev) {
+        	var classOrigin = $(ev.target).attr('class');
+        	var idOrigin = $(ev.target).attr('id');
+        	var tagOrigin = $(ev.target).get(0).tagName;
         	var liNode;
-        	var displayMoreArrow = "inline-block";
-        	var displayLessArrow = "none";
-        	var displayContentItem = "none";
-        	
-        	// An event is not caught at the same place in the DOM according to the browser
-        	if($.browser.mozilla){
-        		liNode = $($(ev.target).parent()).parent();
-				if($(ev.target).find('#zotero_show_less_arrow').css('display') == 'none'){
-					displayMoreArrow = "none";
-					displayLessArrow = "inline-block";
-					displayContentItem =  "block";
-				}
-			}
-			
-			else { 
-				liNode= $($($($(ev.target).parent()).parent()).parent()).parent();
-				if($(ev.target).attr('id') == 'zotero_show_more_arrow') {
-					displayMoreArrow = "none";
-					displayLessArrow = "inline-block";
-					displayContentItem =  "block";
-				}
-			}
-			// !! Internet Explorer has not been tested
-			
-			modifiesDisplayProperty(liNode, "#zotero_show_more_arrow",  displayMoreArrow);
-			modifiesDisplayProperty(liNode, "#zotero_show_less_arrow", displayLessArrow);
-			modifiesDisplayProperty(liNode, ".zotero_content_item", displayContentItem);
+
+        	if(classOrigin == "zotero_item_li"){
+        		liNode = $(ev.target);
+        	}
+        	else {
+        		if((classOrigin == "zotero_see_more_button") || (classOrigin == "zotero_content_title") || (classOrigin == "zotero_content_item")){
+        			liNode = $(ev.target).parent();
+        		}
+	        	if((idOrigin == "zotero_show_more") || (idOrigin == "zotero_title_link") || (tagOrigin == "TABLE")){
+	        		liNode = $($(ev.target).parent()).parent();
+	        	}
+	        	if((idOrigin == "zotero_see_more") || (idOrigin == "zotero_see_less") || (tagOrigin == "TR")){
+	        		liNode = $($($(ev.target).parent()).parent()).parent();
+	        	}
+	        	if((idOrigin == "zotero_show_more_arrow") || (idOrigin == "zotero_show_less_arrow") || (tagOrigin == "TH") || (tagOrigin == "TD")){
+	        		liNode = $($($($(ev.target).parent()).parent()).parent()).parent();
+	        	}
+	        }
+	        
+        	if($(liNode).find('#zotero_show_less_arrow').css('display') == 'none') {
+        		$("#"+ $(liNode).attr('id') + " #zotero_show_more_arrow").hide();
+        		$("#"+ $(liNode).attr('id') + " #zotero_show_less_arrow").show();
+        		$("#"+ $(liNode).attr('id') + " .zotero_content_item").show();
+        	}
+        	else {
+        		$("#"+ $(liNode).attr('id') + " #zotero_show_more_arrow").show();
+        		$("#"+ $(liNode).attr('id') + " #zotero_show_less_arrow").hide();
+        		$("#"+ $(liNode).attr('id') + " .zotero_content_item").hide();
+        	} 
         };
         
-        
-        /**
-         * Modifies the display css property. 
-         *
-         * @param {Object} mainNode The main node which is a parent of the given child node.
-         * @param {String} node A child node of the main one on which the css property will be applied.
-         * @param {String} value The value of the given css property.
-         */
-        var modifiesDisplayProperty = function(mainNode, node, value) {
-        	$("#"+ $(mainNode).attr('id') + " " + node).css({display: value});
-        };
-       	
        	
         /////////////////////////
         // Main View functions //
@@ -414,10 +424,11 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
          */
         var showMainView = function(userId, userKey) {
           	// displays all the collections for the current account
-          	showCollectionsList(userId, userKey);
-          	$mainContainer.show();
+          	if(userId != DEFAULT_INPUT){
+          		showCollectionsList(userId, userKey);
+          		$mainContainer.show();
+          	}
         }
-
 
         /////////////////////////////
         // Settings View functions //
@@ -434,33 +445,49 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
             $userKey.val(checkInput(userKey));
         };
 
+		/**
+         * Initialise form validation
+         */
+        var initValidation = function(){
+            var validateOpts = {
+                submitHandler: changeSettings
+            };
 
+            // Initialize the validate plug-in
+            sakai.api.Util.Forms.validate($settingsForm, validateOpts);
+        };
+        
+        
         ////////////////////
         // Event Handlers //
         ////////////////////
 		
         /** Binds Settings form */
-        $settingsForm.on("submit", function (ev) {
-            // get the selected color
-            var userId = $userID.val();
-            var userKey = $userKey.val();
-
-           // save the userID and the userKey
-            sakai.api.Widgets.saveWidgetData(tuid, {
-                userID: userId,
-                userKey: userKey
-            },
-                function (success, data) {
-                    if (success) {
-                        // Settings finished, switch to Main view
-                        sakai.api.Widgets.Container.informFinish(tuid, "zotero");
-                    }
-                }
-            );
+        $saveSettings.on("click", function (ev) {
+           	if ($settingsForm.valid()) {
+                $settingsForm.submit();
+            }
             return false;
         });
 
+		var changeSettings = function () {
+			var userId = $userID.val();
+            var userKey = $userKey.val();
 
+           // save the userID and the userKey
+           	sakai.api.Widgets.saveWidgetData(tuid, {
+	       		userID: userId,
+	            userKey: userKey
+	        },
+	        function (success, data) {
+	        	if (success) {
+	            	// Settings finished, switch to Main view
+	             	sakai.api.Widgets.Container.informFinish(tuid, "zotero");
+	           	}
+	       	}
+	       	);
+		};
+		
         $cancelSettings.on('click', function() {
             sakai.api.Widgets.Container.informFinish(tuid, 'zotero');
         });
@@ -474,6 +501,7 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         	$userKey.val("");
         	$userKey.focus();
         });
+       
         
         /////////////////////////////
         // Initialization function //
@@ -485,17 +513,18 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
          * and shows the correct view.
          */
         var doInit = function () {
+        	initValidation();
             if (showSettings) {
                 // set up Settings view
                 // get the previous settings
                 getPreferredInput(renderSettings);
                 $settingsContainer.show();
-            } else {
-                // set up Main view with the settings information
-                getPreferredInput(showMainView);
+            } 
+            else {
+            	getPreferredInput(showMainView);
             }
         };
-
+        
         // run the initialization function when the widget object loads
         doInit();
     };

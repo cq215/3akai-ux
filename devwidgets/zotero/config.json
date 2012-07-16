@@ -13,6 +13,7 @@
             "description":    "Zotero's library"
         }
     },
+    "img": "/devwidgets/zotero/images/icon_Zotero.png",
     "personalportal":     true,
     "sakaidocs":          false,
     "showinsakaigoodies": true,
