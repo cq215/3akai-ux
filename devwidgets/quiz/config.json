@@ -1,0 +1,18 @@
+{
+    "enabled": true,
+    "hasSettings": true,
+    "i18n": {
+        "default": {
+            "bundle": "/devwidgets/quiz/bundles/default.properties",
+            "description": "Quiz",
+            "name": "Quiz"
+        }
+    },
+    "id": "quiz",
+    "img": "/devwidgets/quiz/images/googlemaps.png",
+    "imghover": "/devwidgets/quiz/images/googlemaps_hover.png",
+    "indexFields": ["quizinput", "quizhtml"],
+    "sakaidocs": true,
+    "type": "sakai",
+    "url": "/devwidgets/quiz/quiz.html"
+}

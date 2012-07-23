@@ -1,0 +1,131 @@
+
+#quiz_container #quiz_container_main_informations {
+	position:relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 4px;
+    width: 650px;
+    z-index: 999;
+}
+
+#quiz_container #quiz_container_main_informations #quiz_input_text_name {
+	width: 97%;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_textarea_blocks {
+	width: 100%;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_textarea_block {
+	width: 50%;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_textarea_block .quiz_input_textearea {
+	width: 94%;
+	resize: none;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_inputs_text_level_blocks {
+	width: 100%;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_inputs_text_level_blocks #quiz_input_text_level_block {
+	width: 20%;
+}
+
+#quiz_container #quiz_container_main_informations .quiz_input_text_level {
+	width: 85%;
+}
+
+#quiz_container .quiz_container_questions_part {
+	display: inline-block;
+	width: 646px;
+}
+ 
+#quiz_container #quiz_container_newquestion {
+	position:relative;
+	float:left;
+	margin-left: 4px;
+	background-color: #E5EAED;
+    border: 1px solid #a9a9a9;
+    width: 355px;
+    min-height: 419px;
+    -moz-border-radius: 0 5px 5px 5px;
+    border-radius: 0 5px 5px 5px;
+    padding: 12px 15px 12px 12px;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion_raquo_right {
+    background: url("/devwidgets/quiz/images/quiz_raquo_right.png") no-repeat scroll left top transparent;
+    height: 34px;
+    position: absolute;
+    left: 365px;
+    top: 170px;
+    width: 25px;
+    border: 0;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion_raquo_right:disabled {
+    cursor: auto;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion {
+	display:block;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_textarea_block .quiz_input_textearea {
+	float:none;
+	width:97%;
+	resize: none;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table {
+	display:block;
+	width:100%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table table {
+	width:100%;
+	border-collapse: collapse;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table table, td, th {
+	border: 1px solid black;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_table_th_option {
+	width:60%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_table_th_correct {
+	width:40%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_radio {
+	display:inline-block;
+	width:40%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table #quiz_container_add_newquestion_answer {
+	width:40%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_radio input{
+	float:none;
+	width:auto;
+}
+
+#quiz_container #quiz_container_questionlist {
+	position:relative;
+	float:right;
+	border: solid;
+	height: 443px;
+    width: 246px;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    border: 1px #a9a9a9 solid;
+}
+
+
+
