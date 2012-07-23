@@ -25,7 +25,7 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
      * @class zotero
      *
      * @description
-     * Zotero is a dashboard widget that display the content of a Zotero's library for a given account
+     * Zotero is a dashboard widget that displays the items and collections of a Zotero library for a given account.
      * 
      *
      * @version 0.0.1
@@ -109,6 +109,28 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
             });
         };
         
+        /**
+         * Replace all the occurrences of a charactere in a String by a String or a charactere.
+         *
+         * @param {String} oldString The string in which we want to replace a charactere.
+         * @param {Char} toReplace The caractere to replace.
+         * @param {String} forReplace The charactere/string which will replace the previous one.
+         * 
+         * @return {String} newSting The new string without the charactere to replace
+         */
+        var replaceAllOccurrence = function(oldString, toReplace, forReplace) {
+        	var newString = "";
+        	
+        	for(var i = 0 ; i < oldString.length ; i++) {
+        		var followingChar = oldString.charAt(i)
+        		if(followingChar == toReplace) {
+        			followingChar = forReplace;
+        		}
+        		newString = newString + followingChar;
+        	}
+        	return newString;
+        }
+        
         
         /**
          * Feeds the items' list sending a request to the Zotero server throught a proxy.
@@ -162,6 +184,17 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
 							// removing the default style of the details' table
 							$(content).find('table').find('tr').each(function(){
 								$(this).find('th').removeAttr('style');
+								
+								// if it's an url, makink it click-able
+								if($(this).attr('class') == "url") {
+									var itemTd = $(this).find('td');
+									var urlItem = $(itemTd).text();
+									// replacing the charactere & in the url 
+									urlItem = replaceAllOccurrence(urlItem, "&", "&amp;");
+									urlItem = "<a id=\"url_click_able\" href=\"" + urlItem + "\">" + urlItem + "</a>";
+									$(itemTd).text("");
+									$(itemTd).html(urlItem);
+								}
 							});
 							
 							// adding the current item fetched into the list
@@ -380,20 +413,20 @@ require(["jquery", "sakai/sakai.api.core", "sakai/sakai.api.i18n"], function($, 
         	var tagOrigin = $(ev.target).get(0).tagName;
         	var liNode;
 
-        	if(classOrigin == "zotero_item_li"){
-        		liNode = $(ev.target);
+        	if(classOrigin == "zotero_see_more_button"){
+        		liNode = $(ev.target).parent();
         	}
-        	else {
-        		if((classOrigin == "zotero_see_more_button") || (classOrigin == "zotero_content_title") || (classOrigin == "zotero_content_item")){
-        			liNode = $(ev.target).parent();
+        	else{
+        		if(idOrigin == "url_click_able"){
+        			window.open($(ev.target).attr('href'));
         		}
-	        	if((idOrigin == "zotero_show_more") || (idOrigin == "zotero_title_link") || (tagOrigin == "TABLE")){
+	        	if((idOrigin == "zotero_show_more") || (idOrigin == "zotero_title_link")){
 	        		liNode = $($(ev.target).parent()).parent();
 	        	}
-	        	if((idOrigin == "zotero_see_more") || (idOrigin == "zotero_see_less") || (tagOrigin == "TR")){
+	        	if((idOrigin == "zotero_see_more") || (idOrigin == "zotero_see_less")){
 	        		liNode = $($($(ev.target).parent()).parent()).parent();
 	        	}
-	        	if((idOrigin == "zotero_show_more_arrow") || (idOrigin == "zotero_show_less_arrow") || (tagOrigin == "TH") || (tagOrigin == "TD")){
+	        	if((idOrigin == "zotero_show_more_arrow") || (idOrigin == "zotero_show_less_arrow")){
 	        		liNode = $($($($(ev.target).parent()).parent()).parent()).parent();
 	        	}
 	        }

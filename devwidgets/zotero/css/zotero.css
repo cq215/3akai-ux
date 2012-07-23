@@ -181,6 +181,11 @@
     color: #FFFFFF;
 }
 
+.zotero_widget .url a:hover {
+	color: #FFFFFF !important;
+	font-weight: bold;
+}
+
 .zotero_widget .is-selected {
 	background: #6ABCF6;
 	background: -webkit-linear-gradient(top, #D9E9F1 0%,#89D9FB 1%,#83D6F9 10%,#60C2EC 39%,#4FBEF1 48%,#4DC0F1 100%);
