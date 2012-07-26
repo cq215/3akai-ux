@@ -80,40 +80,122 @@
 	resize: none;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table {
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div {
 	display:block;
 	width:100%;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table table {
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div table {
 	width:100%;
 	border-collapse: collapse;
+	table-layout:fixed;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table table, td, th {
-	border: 1px solid black;
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div tr {
+	height: 25px;
+	max-height: 25px;
+	table-layout:fixed;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_table_th_option {
-	width:60%;
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div td, th {
+	border: 1px solid #A9A9A9;
+	height: 25px;
+	max-height: 25px;
+	table-layout:fixed;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_table_th_correct {
-	width:40%;
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div th {
+    background: -moz-linear-gradient(center top , #75b7d7 0%, #93d0ed 100%) repeat scroll 0 0 transparent;
+    color: #666666;
+    height: 28px;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_radio {
-	display:inline-block;
-	width:40%;
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div td {
+	background-color:white;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table #quiz_container_add_newquestion_answer {
-	width:40%;
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_table_th_option {
+	width:80%;
 }
 
-#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table .quiz_container_add_newquestion_radio input{
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_table_th_correct {
+	width:20%;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_checkbox_td {
+	width:100%;
+	vertical-align:middle;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_checkbox_td .quiz_container_add_newquestion_checkbox_div {
+	width:25%;
+	height: 65%;
+	margin-left: auto;
+	margin-right: auto;
+	color: #666666;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_answer {
+	height: 25px;
+	max-height: 25px;
+	width:100%;
+	margin-bottom: 0px;
+	padding: 0px;
+	border:none;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newquestion_table_div .quiz_container_add_newquestion_checkbox_td .quiz_container_add_newquestion_checkbox_div input {
 	float:none;
-	width:auto;
+	width: 15px;
+	height: 15px;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_answertable_tag {
+	display:inline-block;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_answertable_tag .quiz_container_add_newanswer {
+	float:left;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_answertable_tag .quiz_container_remove_lastanswer {
+	float:right;
+	margin-left:50px;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer #quiz_container_add_newanswer_button span, #quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer #quiz_container_remove_lastanswer_button span {
+	display:inline;
+	margin-left: 6px;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer .s3d-link-button,  #quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_remove_lastanswer .s3d-link-button {
+	color: #666666;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer .s3d-link-button:hover, #quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_remove_lastanswer .s3d-link-button:hover {
+	color: #2683BC;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer .s3d-link-button #quiz_container_add_newanswer_plusbutton {
+	display: inline-block;
+	width: 9px;
+	height: 9px;
+	background:url("/devwidgets/quiz/images/search_tag_active.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_add_newanswer .s3d-link-button:hover #quiz_container_add_newanswer_plusbutton {
+	background:url("/devwidgets/quiz/images/search_tag_add.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_remove_lastanswer .s3d-link-button #quiz_container_remove_lastanswer_tagbutton {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	background:url("/devwidgets/quiz/images/delete_icon_default.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_newquestion #quiz_container_add_newquestion #quiz_container_add_newquestion_form .quiz_container_remove_lastanswer .s3d-link-button:hover #quiz_container_remove_lastanswer_tagbutton {
+	background:url("/devwidgets/quiz/images/delete_icon_hover.png") no-repeat top left transparent;
 }
 
 #quiz_container #quiz_container_questionlist {
@@ -127,5 +209,85 @@
     border: 1px #a9a9a9 solid;
 }
 
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_header {
+	background-color: #E5EAED;
+	border-radius: 5px 5px 0 0;
+	font-size: 12px;
+	height: 21px;
+	margin: 0px;
+	padding: 10px 12px 5px;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul {
+	overflow:auto;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul .quiz_container_questionslist_empty {
+	color:#AAAAAA;
+	display:block;
+	font-size:12px;
+	font-style:italic;
+	margin:7px 12px;	
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul {
+	margin: 0;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li {
+	border-bottom: 1px solid #E5EAED;
+	color: #424242;
+	list-style:none outside none;
+	padding: 6px 20px 6px 30px;
+	display:inline-block;
+	width:80%;
+}
 
 
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .quiz_container_question_to_remove {
+	background:url("/devwidgets/quiz/images/delete_icon_default.png") no-repeat top left transparent;
+	cursor:pointer;
+	float:right;
+	height:13px;
+	width:13px;
+	margin-top:1px;
+	text-decoration: none;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .quiz_container_question_to_remove:hover { 
+	background:url("/devwidgets/quiz/images/delete_icon_hover.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .quiz_container_question_to_add_title {
+	float:left;
+	margin-left:10px;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .s3d-link-button {
+	float:left;
+	width: 16px;
+	height: 15px;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .s3d-link-button #quiz_container_questionslist_show_more_arrow {
+	display: inline-block;
+	width: 16px;
+	height: 15px;
+	background:url("/dev/images/arrow_down_square.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .s3d-link-button:hover #quiz_container_questionslist_show_more_arrow {
+	background:url("/dev/images/arrow_down_square_hover.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .s3d-link-button #quiz_container_questionslist_show_less_arrow {
+	display: inline-block;
+	width: 16px;
+	height: 15px;
+	background:url("/dev/images/arrow_up_square.png") no-repeat top left transparent;
+}
+
+#quiz_container #quiz_container_questionlist #quiz_container_questionlist_ul ul li .s3d-link-button:hover #quiz_container_questionslist_show_less_arrow {
+	background:url("/dev/images/arrow_up_square_hover.png") no-repeat top left transparent;
+}

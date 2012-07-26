@@ -49,45 +49,69 @@
 	         	<form id="quiz_container_add_newquestion_form" class="s3d-form-field-wrapper">
 	         		<div class="quiz_container_add_newquestion_textarea_block">
 		            	<label for="quiz_container_add_newquestion_question" class="s3d-input-label s3d-input-label-above">__MSG__QUESTION__:</label>
-		               	<textarea id="quiz_container_add_newquestion_question" class="quiz_input_textearea" placeholder="__MSG__ENTER_A_QUESTION__"></textarea><br/>
+		               	<textarea id="quiz_container_add_newquestion_question" class="quiz_input_textearea question_required required" placeholder="__MSG__ENTER_A_QUESTION__"></textarea><br/>
 					</div>
 					<div class="quiz_container_add_newquestion_textarea_block">
-		                <label for="quiz_container_add_newquestion_goodcomment" class="s3d-input-label s3d-input-label-above">__MSG__GOOD_COMMENT__:</label>
-		                <textarea id="quiz_container_add_newquestion_question" class="quiz_input_textearea" placeholder="__MSG__ENTER_A_GOOD_COMMENT__"></textarea><br/>
+		                <label for="quiz_container_add_newquestion_correctcomment" class="s3d-input-label s3d-input-label-above">__MSG__CORRECT_COMMENT__:</label>
+		                <textarea id="quiz_container_add_newquestion_correctcomment" class="quiz_input_textearea" placeholder="__MSG__ENTER_A_CORRECT_COMMENT__"></textarea><br/>
 					</div>
 					<div class="quiz_container_add_newquestion_textarea_block">
-		                <label for="quiz_container_add_newquestion_badcomment" class="s3d-input-label s3d-input-label-above">__MSG__BAD_COMMENT__:</label>
-		                <textarea id="quiz_container_add_newquestion_badcomment" class="quiz_input_textearea" placeholder="__MSG__ENTER_A_BAD_COMMENT__"></textarea><br/>
+		                <label for="quiz_container_add_newquestion_incorrectcomment" class="s3d-input-label s3d-input-label-above">__MSG__INCORRECT_COMMENT__:</label>
+		                <textarea id="quiz_container_add_newquestion_incorrectcomment" class="quiz_input_textearea" placeholder="__MSG__ENTER_AN_INCORRECT_COMMENT__"></textarea><br/>
 	                </div>
-	                <div class="quiz_container_add_newquestion_table">
-		                <table>
-		                	<tr>
+	                <div class="quiz_container_add_newquestion_table_div">
+		                <table id="quiz_container_add_newquestion_table">
+		                	<tr class="cant_be_deleted">
 			                	<th class="quiz_container_add_newquestion_table_th_option">__MSG__OPTIONS__</th>
 			                	<th class="quiz_container_add_newquestion_table_th_correct">__MSG__CORRECT__</th>
 		                	</tr>
-		                	<tr>
-		                   		<td><input type="text" id="quiz_container_add_newquestion_answer"/></td>
-		                   		<td class="quiz_container_add_newquestion_radio">
-		                    		<input type="radio" name="groupanswer1" value="1" id="quiz_container_add_newquestion_radio_true" size="1"/>__MSG__YES__ 
-		                    		<input type="radio" name="groupanswer1" value="0" id="quiz_container_add_newquestion_radio_false" size="1"/> __MSG__NO__
+		                	<tr class="cant_be_deleted">
+		                   		<td><input type="text" id="quiz_container_add_newquestion_answer_0" class="quiz_container_add_newquestion_answer question_required required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
+		                   		<td class="quiz_container_add_newquestion_checkbox_td">
+		                   			<div class="quiz_container_add_newquestion_checkbox_div">
+			                    		<input type="checkbox" id="quiz_container_add_newquestion_checkbox" size="1"/>
+			                    	</div>
 								</td>
 		                	</tr>
-		                   	<tr>
-		                    	<td><input type="text" id="quiz_container_add_newquestion_answer"/></td>
-		                    	<td class="quiz_container_add_newquestion_radio">
-		                    		<input type="radio" name="groupanswer2" value="1" id="quiz_container_add_newquestion_radio_true" size="1"/>__MSG__YES__ 
-		                    		<input type="radio" name="groupanswer2" value="0" id="quiz_container_add_newquestion_radio_false" size="1"/> __MSG__NO__
+		                   	<tr class="cant_be_deleted">
+		                    	<td><input type="text" id="quiz_container_add_newquestion_answer_1" class="quiz_container_add_newquestion_answer question_required required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
+		                    	<td class="quiz_container_add_newquestion_checkbox_td">
+		                    		<div class="quiz_container_add_newquestion_checkbox_div">
+			                    		<input type="checkbox" id="quiz_container_add_newquestion_checkbox" size="1"/>
+			                    	</div>
 								</td>
 		            		</tr>
 		       			</table>
 	       			</div>
+	       			<div class="quiz_container_answertable_tag">
+	       				<div class="quiz_container_add_newanswer"> 
+							<button type="button" id="quiz_container_add_newanswer_button" class="s3d-button s3d-link-button s3d-action">
+				        		<div id="quiz_container_add_newanswer_plus">
+				        			<span id="quiz_container_add_newanswer_plusbutton"></span>
+				        			<span>__MSG__ADD_AN_ANSWER__</span>
+				        		</div>
+				       		</button>
+				       	</div>
+				       	<div class="quiz_container_remove_lastanswer"> 
+							<button type="button" id="quiz_container_remove_lastanswer_button" class="s3d-button s3d-link-button s3d-action">
+				        		<div id="quiz_container_remove_lastanswer_tag">
+				        			<span id="quiz_container_remove_lastanswer_tagbutton"></span>
+				        			<span>__MSG__REMOVE_LAST_ANSWER__</span>
+				        		</div>
+				       		</button>
+				       	</div>
+					</div>
 	          	</form>
-	    		<button type="button" class="s3d-button s3d-header-button quiz_container_add_newquestion_to_list" disabled="disabled">__MSG__ADD_QUESTION__</button>
+	          	<div class="fl-force-right">
+	    			<button type="button" class="s3d-button s3d-header-button quiz_container_add_newquestion_to_list" disabled="disabled">__MSG__ADD_QUESTION__</button>
+	      		</div>
 	      	</div>
 	  		<button type="button" id="quiz_container_add_newquestion_raquo_right" class="s3d-button quiz_container_add_newquestion_to_list" disabled="disabled" title="__MSG__ADD_QUESTION__"></button>
 		</div>	
 		<div id="quiz_container_questionlist">
-	    	
+			<h2 id="quiz_container_questionlist_header" class="s3d-bold">Questions list</h2>
+			<div id="quiz_container_questionlist_ul">
+			</div>
 	    </div>
     </div>
     <!-- The submit and cancel button -->
@@ -97,5 +121,39 @@
    	</div>
 </div>
 
+<div id="quiz_add_newquestion_table_template" style="display:none;"><!--
+  	<tr>
+		<td><input type="text" id="quiz_container_add_newquestion_answer_${answersNumber}" class="quiz_container_add_newquestion_answer" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
+		<td class="quiz_container_add_newquestion_checkbox_td">
+			<div class="quiz_container_add_newquestion_checkbox_div">
+				<input type="checkbox" id="quiz_container_add_newquestion_checkbox" size="1"/>
+			</div>
+		</td>
+	</tr>
+--></div>
+<div id="quiz_container_questionlist_template" style="display:none;"><!--
+  	{if questions.length}
+  		<ul>
+  			{for question in questions}
+		  		<li id="quiz_container_question_to_add_${question.id}" class="quiz_container_question_to_add_li">
+		  			<button type="button" id="quiz_container_questionlist_show_details" class="s3d-button s3d-link-button s3d-action">
+			        	<div id="quiz_container_questionslist_see_more">
+			        		<span id="quiz_container_questionslist_show_more_arrow"></span>
+			        	</div>
+			        	<div id="quiz_container_questionslist_see_less">
+			        		<span id="quiz_container_questionslist_show_less_arrow" style="display: none;"></span>
+			        	</div>
+			       	</button>
+		  			<span class="quiz_container_question_to_add_title">${question.q}</span>
+					<a class="quiz_container_question_to_remove" title="__MSG__REMOVE_THE_QUESTION__ ${question.q}" href="#"></a>
+		  		</li>
+		  	{/for}	
+	  	</ul>
+  	{else}
+        <span class="quiz_container_questionslist_empty">__MSG__YOU_HAVENT_CREATED_ANY_QUESTION_YET__</span>
+        <span class="quiz_container_questionslist_empty">__MSG__ADD_VARIOUS_QUESTION_HERE__</span>
+    {/if}
+--></div>
+
 <!-- JAVASCRIPT -->
-<script type="text/javascript" src="/devwidgets/googlemaps/javascript/googlemaps.js"></script>
+<script type="text/javascript" src="/devwidgets/quiz/javascript/quiz.js"></script>
