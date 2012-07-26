@@ -133,9 +133,9 @@
 --></div>
 <div id="quiz_container_questionlist_template" style="display:none;"><!--
   	{if questions.length}
-  		<ul>
+  		<ul class="sortable">
   			{for question in questions}
-		  		<li id="quiz_container_question_to_add_${question.id}" class="quiz_container_question_to_add_li">
+		  		<li id="quiz_container_question_to_add_${question_index}" class="quiz_container_question_to_add_li">
 		  			<button type="button" id="quiz_container_questionlist_show_details" class="s3d-button s3d-link-button s3d-action">
 			        	<div id="quiz_container_questionslist_see_more">
 			        		<span id="quiz_container_questionslist_show_more_arrow"></span>
@@ -147,12 +147,16 @@
 		  			<span class="quiz_container_question_to_add_title">${question.q}</span>
 					<a class="quiz_container_question_to_remove" title="__MSG__REMOVE_THE_QUESTION__ ${question.q}" href="#"></a>
 		  		</li>
-		  	{/for}	
+		  	{/for}
 	  	</ul>
   	{else}
         <span class="quiz_container_questionslist_empty">__MSG__YOU_HAVENT_CREATED_ANY_QUESTION_YET__</span>
         <span class="quiz_container_questionslist_empty">__MSG__ADD_VARIOUS_QUESTION_HERE__</span>
     {/if}
+--></div>
+
+<div id="quiz_container_questiondetails_template" style="display:none;"><!--
+  	
 --></div>
 
 <!-- JAVASCRIPT -->

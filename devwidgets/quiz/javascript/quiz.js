@@ -17,7 +17,7 @@
  */
 
 // load the master sakai object to access all Sakai OAE API methods
-require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
+require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
 
     /**
      * @name sakai_global.quiz
@@ -117,7 +117,6 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         	}
         	
         	var contentQuestion = {
-        		"id": questionsNumber,
         		"q" : $(quizContainerAddNewQuestionQuestion).val(),
         		"a" : answersTable,
         		"correct" : $(quizContainerAddNewQuestionCorrectComment).val(),
@@ -193,6 +192,13 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         	$quizContainerQuestionListUl.html(
                     sakai.api.Util.TemplateRenderer(quizContainerQuestionListTemplate, templateData)
              );
+             
+            $(".sortable" ).sortable({
+            	connectWith: '.sortable',
+                revert: true,
+                opacity: 0.5,
+                tolerance: 'intersect'
+            });
         }
         
         var resetQuestionInputs = function() {
