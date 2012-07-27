@@ -53,6 +53,8 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         var $quizContainerQuestionListUl = $('#quiz_container_questionlist_ul');
         var quizContainerQuestionListTemplate = 'quiz_container_questionlist_template';
         var $quizContainerQuestionToRemove = $('.quiz_container_question_to_remove');
+        var $quizContainerQuestionListShowDetails = $('#quiz_container_questionlist_show_details');
+        var quizContainerQuestionDetailsTemplate = '#quiz_container_questiondetails_template';
         var buttonDisabled = "s3d-disabled";
         var answersNumber = 1;
         var questionsNumber = -1;
@@ -160,6 +162,16 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         		}
         });
         
+       /* $quizContainerQuestionListShowDetails.live('click', function() {
+        		var parentId = $(this).parent()[0].id;
+        		var index = parentId.split('quiz_container_question_to_add_')[1];
+        		var templateData = questionsList[index];
+        		$('#' + parentId).append(
+                    sakai.api.Util.TemplateRenderer(quizContainerQuestionDetailsTemplate, templateData)
+             	);
+        		
+        });*/
+        
         $quizContainerAddNewQuestionRaquoRight.live('click', function() {
         	addQuestionToList();
         	resetQuestionInputs();
@@ -207,12 +219,16 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         	$(quizContainerAddNewQuestionIncorrectComment).val('');
         	$(quizContainerAddNewQuestionAnswer_0).val('');
         	$(quizContainerAddNewQuestionAnswer_1).val('');
+        	
         	disableElements($($quizContainerAddNewQuestionToList));
         	disableElements($($quizContainerAddNewQuestionRaquoRight));
             questionCanBeSaved = false;
         	$(quizContainerAddNewQuestionTable).find('tr').each(function() {
         		if ($(this).attr('class') != 'cant_be_deleted') {
         			$(this).remove();
+        		}
+        		else {
+        			$($(this).find('input[type=checkbox]')[0]).attr('checked', false);
         		}
         	});
         }

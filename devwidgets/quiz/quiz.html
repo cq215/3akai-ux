@@ -136,7 +136,7 @@
   		<ul class="sortable">
   			{for question in questions}
 		  		<li id="quiz_container_question_to_add_${question_index}" class="quiz_container_question_to_add_li">
-		  			<button type="button" id="quiz_container_questionlist_show_details" class="s3d-button s3d-link-button s3d-action">
+		  			<button type="button" id="quiz_container_questionlist_show_details" class="savecontent_trigger s3d-button s3d-link-button s3d-action">
 			        	<div id="quiz_container_questionslist_see_more">
 			        		<span id="quiz_container_questionslist_show_more_arrow"></span>
 			        	</div>
@@ -156,7 +156,18 @@
 --></div>
 
 <div id="quiz_container_questiondetails_template" style="display:none;"><!--
-  	
+  	<div class="s3d-dropdown-list">
+    <div class="s3d-dropdown-list-arrow-up"></div>
+    <ul>
+        <li>
+            <button class="s3d-link-button">perm</button>
+        </li>
+        <hr class="s3d-split-line">
+        <li>
+            <button class="s3d-link-button">delete</button>
+        </li>
+    </ul>
+	</div>
 --></div>
 
 <!-- JAVASCRIPT -->
