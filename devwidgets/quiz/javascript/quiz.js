@@ -39,10 +39,13 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
          */
         
         
-        var answersNumber = 1;
+       
         var questionsNumber = -1;
         var questionsList = [];
-        var minAnswersNumber = 1;
+        var minAnswersNumber = 1; 
+        var answersNumber = minAnswersNumber;
+        var answersNumberQuestionDetails = minAnswersNumber;
+        var questionInModification = 0;
         var questionCanBeSaved = false;
         
         //Node
@@ -58,6 +61,7 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         var $quizQuestionsListRemoveButton = $('.quiz_questionslist_remove_button');
         var $quizQuestionsListDetailsButton = $('.quiz_questionslist_details_button');
         var $quizContainerQuestionDetails = $('#quiz_container_questiondetails'); 
+        var $quizQuestionDetailsClose = $('#quiz_questiondetails_close');
         
         //Class
         var newQuestionRequired = '.newquestion_required';
@@ -71,11 +75,18 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         var quizNewQuestionAnswer_0 = '#quiz_newquestion_answer_0';
         var quizNewQuestionAnswer_1 = '#quiz_newquestion_answer_1';
         var quizQuestionsListItem = 'quiz_questionslist_item_';
+        var quizQuestionDetailsModify = '#quiz_questiondetails_modify';
+        var quizQuestionDetailsSaveModification = '#quiz_questiondetails_savemodification';
+        var quizQuestionDetailsRemoveButton = '#quiz_questiondetails_remove_button';
+        var quizQuestionDetailsAddButton = '#quiz_questiondetails_add_button';
+
         
         //Template 
-        var quizAddNewAnswerTableTemplate = 'quiz_add_newanswer_table_template';
+        var quizNewQuestionAddNewAnswerTableTemplate = 'quiz_newquestion_add_newanswer_table_template';
+        var quizQuestionsDetailsAddNewAnswerTableTemplate = 'quiz_questiondetails_add_newanswer_table_template';
         var quizQuestionsListTemplate = 'quiz_questionslist_template';
         var quizQuestionDetailsTemplate = 'quiz_questiondetails_template';
+        
         
         
         /**
@@ -110,7 +121,7 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
             return (answer.replace(/ /g, "") !== "");
         };
         
-        var constructQuestionToAdd = function() {
+        var constructQuestionToAdd = function(index) {
         	var answersTable = [];
         	var answerInputs;
         	var answerTextInput;
@@ -120,10 +131,11 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         	questionsNumber++;
         	
         	for (var i = 1 ; i < rows.length ; i++) {
+        		answerCheckboxInput = false;
         		answerInputs = $(rows[i]).find('td');
 				answerTextInput = $($(answerInputs[0]).find('input')).val();
         		if (checkIfAnswerValid(answerTextInput)) {
-        			if(($(answerInputs[1]).find('input')).checked) {
+        			if($($(answerInputs[1]).find('input')).is(':checked')) {
         				answerCheckboxInput = true;
         			}
         			answersTable[i] = {
@@ -139,21 +151,27 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         		"correct" : $(quizNewQuestionCorrectComment).val(),
         		"incorrect" : $(quizNewQuestionIncorrectComment).val()
         	};
-        	questionsList.push(contentQuestion);
+        	
+        	if (index) {
+        		questionsList[index] = contentQuestion;
+        	}
+        	else {
+        		questionsList.push(contentQuestion);
+        	}	
         };
 
         /** Binds all the regional settings select box change **/
         $(newQuestionRequired, $quizNewQuestionForm).keyup(function(e) {
             // enable the save button
             if (checkIfInputValid()) {
-            	enableElements($($quizNewQuestionAddToList));
-            	enableElements($($quizNewQuestionRaquoRight));
+            	enableElements($quizNewQuestionAddToList);
+            	enableElements($quizNewQuestionRaquoRight);
             	questionCanBeSaved = true;
             }
             else {
            		if (questionCanBeSaved) {
-            		disableElements($($quizNewQuestionAddToList));
-            		disableElements($($quizNewQuestionRaquoRight));
+            		disableElements($quizNewQuestionAddToList);
+            		disableElements($quizNewQuestionRaquoRight);
             		questionCanBeSaved = false;
            	 	}
            	 }
@@ -161,11 +179,8 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         
         $quizNewQuestionAddButton.on('click', function() {
         		answersNumber++;
-        		var templateData = {
-	                'answersNumber': answersNumber
-	            };
 	            $quizNewQuestionTable.append(
-                    sakai.api.Util.TemplateRenderer(quizAddNewAnswerTableTemplate, templateData)
+                    sakai.api.Util.TemplateRenderer(quizNewQuestionAddNewAnswerTableTemplate, templateData)
                 );
         });
         
@@ -175,21 +190,7 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         			var rows = $(quizNewQuestionTable).find('tr');
         			$(rows[rows.length-1]).remove();
         		}
-        });
-        
-        $quizQuestionsListDetailsButton.live('click', function() {
-        		var parentId = $(this).parent()[0].id;
-        		var index = parentId.split(quizQuestionsListItem)[1];
-        		var templateData = questionsList[index];
-        		$quizContainerQuestionDetails.show();
-            	$quizContainerQuestionDetails.css('left', $(this).parents('li').position().left + 'px');
-            	$quizContainerQuestionDetails.css('top', $(this).parents('li').position().top + 40 + 'px');
-
-        		$quizContainerQuestionDetails.html(
-                    sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData)
-             	);
-        		return true;
-        });
+        });  
         
         $quizNewQuestionRaquoRight.live('click', function() {
         	addQuestionToList();
@@ -201,13 +202,63 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         	resetQuestionInputs();
         });
         
-        $quizQuestionsListRemoveButton.live('click', function(){
+        $quizQuestionsListDetailsButton.live('click', function() {
+        		var parentId = $(this).parent()[0].id;
+        		var index = parentId.split(quizQuestionsListItem)[1];
+	        	var templateData = questionsList[index];
+	        	questionInModification = index;
+	        	answersNumberQuestionDetails = templateData["a"].length-2;
+				$quizContainerQuestionDetails.show();
+				$quizContainerQuestionDetails.html(sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData));
+
+             	/*bug......*/
+        });
+        
+        $quizQuestionsListRemoveButton.live('click', function() {
         	var index = $(this).parent()[0].id.split(quizQuestionsListItem)[1];
         	questionsList.splice(index,1);
         	questionsNumber--;
         	renderQuestionsList();
         });
         
+        $quizQuestionDetailsClose.live('click', function() {
+        	$quizContainerQuestionDetails.hide();
+        });
+        
+        $(quizQuestionDetailsModify).live('click', function() {
+        	$(this).parent().parent().find('input').each(function() {
+        		enableElements($(this));
+        	});
+        	$(this).parent().parent().find('textarea').each(function() {
+        		enableElements($(this));
+        	});
+        	$(this).parent().parent().find('button').each(function() {
+        		enableElements($(this));
+        	});
+        	disableElements($(this));
+        });
+        
+        $(quizQuestionDetailsSaveModification).live('click', function() {
+        	constructQuestionToAdd(questionInModification);
+        	renderQuestionsList();
+        });
+        
+		$(quizQuestionDetailsAddButton).live('click', function() {
+			answersNumberQuestionDetails++;
+			var templateData = {
+				'answersNumber' : answersNumber
+			};
+			$(this).parent().parent().parent().find('#quiz_questiondetails_table').append(sakai.api.Util.TemplateRenderer(quizQuestionsDetailsAddNewAnswerTableTemplate, templateData));
+		});
+		
+		$(quizQuestionDetailsRemoveButton).live('click', function() {
+			if(answersNumberQuestionDetails > minAnswersNumber) {
+				answersNumberQuestionDetails--;
+				var rows = $(this).parent().parent().parent().find('#quiz_questiondetails_table').find('tr');
+				$(rows[rows.length - 1]).remove();
+			}
+		});
+		
         var addQuestionToList = function() {
         	if(questionCanBeSaved) {
 	        	constructQuestionToAdd();
@@ -237,8 +288,8 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         	$(quizNewQuestionCorrectComment).val('');
         	$(quizNewQuestionIncorrectComment).val('');
         	
-        	disableElements($($quizNewQuestionAddToList));
-        	disableElements($($quizNewQuestionRaquoRight));
+        	disableElements($quizNewQuestionAddToList);
+        	disableElements($quizNewQuestionRaquoRight);
             questionCanBeSaved = false;
         	$(quizNewQuestionTable).find('tr').each(function() {
         		if ($(this).attr('class') != cantBeDeleted) {
@@ -250,6 +301,7 @@ require(['jquery', 'sakai/sakai.api.core', 'jquery-ui'], function($, sakai) {
         			$($(this).find('input[type=checkbox]')[0]).attr('checked', false);
         		}
         	});
+        	answersNumber = minAnswersNumber;
         }
         
         var doInit = function () {
