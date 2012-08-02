@@ -2,131 +2,159 @@
 <link rel="stylesheet" type="text/css" href="/devwidgets/quiz/css/quiz.css" />
 
 <!-- MAIN VIEW -->
-<div id="quiz_container">
-	<div id="quiz_container_main_informations">
-	    <form id="quiz_main_informations_form" class="s3d-form-field-wrapper">
-	        <label for="quiz_main_informations_name" class="s3d-input-label s3d-input-label-above">__MSG__NAME__:</label><br/>
-	        <input type="text" id="quiz_main_informations_name" class="main_informations_required"/><br/>
-	        
-	        <div id="quiz_main_informations_textarea_blocks">
-	        	<div id="quiz_main_informations_description_block">
-	        		<label for="quiz_main_informations_description" class="s3d-input-label s3d-input-label-above">__MSG__DESCRIPTION__:</label><br/>
-	        		<textarea id="quiz_main_informations_description" placeholder="__MSG__ENTER_A_DESCRIPTION__" class="quiz_main_informations_textearea main_informations_required"></textarea><br/>
-	        	</div>
-	        	<div id="quiz_main_informations_comment_block">
-	        		<label for="quiz_main_informations_comment" class="s3d-input-label s3d-input-label-above">__MSG__COMMENT__:</label><br/>
-	        		<textarea id="quiz_main_informations_comment" placeholder="__MSG__ENTER_A_COMMENT__" class="quiz_main_informations_textearea main_informations_required"></textarea><br/>
-	        	</div>
-	        </div>
-	        
-	       	<div id="quiz_main_informations_levels_blocks">
-	       		<div class="quiz_main_informations_level_block_left">
-		      		<label for="quiz_main_informations_level1" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 1 :</label>
-		       		<input type="text" id="quiz_main_informations_level1" class="quiz_main_informations_level_input main_informations_required" /><br/>
-	     		</div>
-			  	<div class="quiz_main_informations_level_block_left">
-		        	<label for="quiz_main_informations_level2" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 2:</label>
-		        	<input type="text" id="quiz_main_informations_level2" class="quiz_main_informations_level_input main_informations_required" /><br/>
-		    	</div>
-			    <div class="quiz_main_informations_level_block_left">
-		        	<label for="quiz_main_informations_level3" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 3:</label>
-		        	<input type="text" id="quiz_main_informations_level3" class="quiz_main_informations_level_input main_informations_required" /><br/>
-		        </div>
-			    <div class="quiz_main_informations_level_block_left">
-		        	<label for="quiz_main_informations_level4" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 4:</label>
-		        	<input type="text" id="quiz_main_informations_level4" class="quiz_main_informations_level_input main_informations_required" /><br/>
-		       	</div>
-			    <div class="quiz_main_informations_level_block_right">
-		        	<label for="quiz_main_informations_level5" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 5:</label>
-		        	<input type="text" id="quiz_main_informations_level5" class="quiz_main_informations_level_input main_informations_required" /><br/>
-		        </div>
-	        </div>
-	    </form>
-	</div>
-	<div id="quiz_container_questions">
-		<div id="quiz_newquestion_container">
-			<div id="quiz_newquestion_div">
-	         	<form id="quiz_newquestion_form" class="s3d-form-field-wrapper">
-	         		<div class="quiz_newquestion_textarea_block">
-		            	<label for="quiz_newquestion_question" class="s3d-input-label s3d-input-label-above">__MSG__QUESTION__:</label>
-		               	<textarea id="quiz_newquestion_question" class="quiz_newquestion_textearea newquestion_required" placeholder="__MSG__ENTER_A_QUESTION__"></textarea><br/>
-					</div>
-					<div class="quiz_newquestion_textarea_block">
-		                <label for="quiz_newquestion_correctcomment" class="s3d-input-label s3d-input-label-above">__MSG__CORRECT_COMMENT__:</label>
-		                <textarea id="quiz_newquestion_correctcomment" class="quiz_newquestion_textearea" placeholder="__MSG__ENTER_A_CORRECT_COMMENT__"></textarea><br/>
-					</div>
-					<div class="quiz_newquestion_textarea_block">
-		                <label for="quiz_newquestion_incorrectcomment" class="s3d-input-label s3d-input-label-above">__MSG__INCORRECT_COMMENT__:</label>
-		                <textarea id="quiz_newquestion_incorrectcomment" class="quiz_newquestion_textearea" placeholder="__MSG__ENTER_AN_INCORRECT_COMMENT__"></textarea><br/>
-	                </div>
-	                <div id="quiz_newquestion_table_div">
-		                <table id="quiz_newquestion_table">
-		                	<tr class="cant_be_deleted">
-			                	<th id="quiz_newquestion_th_option">__MSG__OPTIONS__</th>
-			                	<th id="quiz_newquestion_th_correct">__MSG__CORRECT__</th>
-		                	</tr>
-		                	<tr id="quiz_newquestion_answer_0" class="cant_be_deleted">
-		                   		<td><input type="text" class="quiz_newquestion_answer newquestion_required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
-		                   		<td class="quiz_newquestion_checkbox_td">
-		                   			<div class="quiz_newquestion_checkbox_div">
-			                    		<input type="checkbox" class="quiz_newquestion_checkbox" size="1"/>
-			                    	</div>
-								</td>
-		                	</tr>
-		                   	<tr id="quiz_newquestion_answer_1" class="cant_be_deleted">
-		                    	<td><input type="text" class="quiz_newquestion_answer newquestion_required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
-		                    	<td class="quiz_newquestion_checkbox_td">
-		                    		<div class="quiz_newquestion_checkbox_div">
-			                    		<input type="checkbox" id="quiz_newquestion_checkbox" size="1"/>
-			                    	</div>
-								</td>
-		            		</tr>
-		       			</table>
-	       			</div>
-	       			<div id="quiz_newquestion_modifytable">
-	       				<div id="quiz_newquestion_add_newanswer"> 
-							<button type="button" id="quiz_newquestion_add_button" class="s3d-button s3d-link-button s3d-action">
-				        		<div id="quiz_newquestion_add_div">
-				        			<span id="quiz_newquestion_add_tag"></span>
-				        			<span>__MSG__ADD_AN_ANSWER__</span>
-				        		</div>
-				       		</button>
-				       	</div>
-				       	<div id="quiz_newquestion_remove_lastanswer"> 
-							<button type="button" id="quiz_newquestion_remove_button" class="s3d-button s3d-link-button s3d-action">
-				        		<div id="quiz_newquestion_remove_div">
-				        			<span id="quiz_newquestion_remove_tag"></span>
-				        			<span>__MSG__REMOVE_LAST_ANSWER__</span>
-				        		</div>
-				       		</button>
-				       	</div>
-					</div>
-	          	</form>
-	          	<div class="fl-force-right">
-	    			<button type="button" class="s3d-button s3d-header-button" id="quiz_newquestion_addtolist" disabled="disabled">__MSG__ADD_QUESTION__</button>
-	      		</div>
-	      	</div>
-	  		<button type="button" id="quiz_newquestion_raquo_right" class="s3d-button quiz_newquestion_addtolist" disabled="disabled" title="__MSG__ADD_QUESTION__"></button>
-		</div>	
-		<div id="quiz_questionslist_container">
-			<h2 id="quiz_questionslist_header" class="s3d-bold">Questions list</h2>
-			<div id="quiz_questionslist_createditems"></div>
-	    </div>
+<div id="quiz_settings" class="fl-widget-content s3d-widget-content" style="display: none;">
+    <div id="quiz_settings_main_informations">
+        <form id="quiz_main_informations_form" class="s3d-form-field-wrapper">
+            <label for="quiz_main_informations_name" class="s3d-input-label s3d-input-label-above">__MSG__NAME__:</label><br/>
+            <input type="text" id="quiz_main_informations_name" class="main_informations_required" placeholder="__MSG__ENTER_A_NAME__"/><br/>
+            <div id="quiz_main_informations_textarea_blocks">
+                <div id="quiz_main_informations_description_block">
+                    <label for="quiz_main_informations_description" class="s3d-input-label s3d-input-label-above">__MSG__DESCRIPTION__:</label><br/>
+                    <textarea id="quiz_main_informations_description" placeholder="__MSG__ENTER_A_DESCRIPTION__" class="quiz_main_informations_textearea main_informations_required"></textarea><br/>
+                </div>
+                <div id="quiz_main_informations_comment_block">
+                    <label for="quiz_main_informations_comment" class="s3d-input-label s3d-input-label-above">__MSG__COMMENT__:</label><br/>
+                    <textarea id="quiz_main_informations_comment" placeholder="__MSG__ENTER_A_COMMENT__" class="quiz_main_informations_textearea main_informations_required"></textarea><br/>
+                </div>
+            </div>
+            <div id="quiz_main_informations_levels_blocks">
+                <div class="quiz_main_informations_level_block_left">
+                    <label for="quiz_main_informations_level1" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 1 :</label>
+                    <input type="text" id="quiz_main_informations_level1" class="quiz_main_informations_level_input main_informations_required" placeholder="__MSG__THE_BEST__"/><br/>
+                </div>
+                <div class="quiz_main_informations_level_block_left">
+                    <label for="quiz_main_informations_level2" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 2:</label>
+                    <input type="text" id="quiz_main_informations_level2" class="quiz_main_informations_level_input main_informations_required" placeholder="..."/><br/>
+                </div>
+                <div class="quiz_main_informations_level_block_left">
+                    <label for="quiz_main_informations_level3" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 3:</label>
+                    <input type="text" id="quiz_main_informations_level3" class="quiz_main_informations_level_input main_informations_required" placeholder="..."/><br/>
+                </div>
+                <div class="quiz_main_informations_level_block_left">
+                    <label for="quiz_main_informations_level4" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 4:</label>
+                    <input type="text" id="quiz_main_informations_level4" class="quiz_main_informations_level_input main_informations_required" placeholder="..."/><br/>
+                </div>
+                <div class="quiz_main_informations_level_block_right">
+                    <label for="quiz_main_informations_level5" class="s3d-input-label s3d-input-label-above">__MSG__LEVEL__ 5:</label>
+                    <input type="text" id="quiz_main_informations_level5" class="quiz_main_informations_level_input main_informations_required" placeholder="__MSG__THE_WORTH__"/><br/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="quiz_settings_questions">
+        <div id="quiz_newquestion_container">
+            <div id="quiz_newquestion_div">
+                <form id="quiz_newquestion_form" class="s3d-form-field-wrapper">
+                    <div class="quiz_newquestion_textarea_block">
+                        <label for="quiz_newquestion_question" class="s3d-input-label s3d-input-label-above">__MSG__QUESTION__:</label>
+                        <textarea id="quiz_newquestion_question" class="quiz_newquestion_textearea newquestion_required" placeholder="__MSG__ENTER_A_QUESTION__"></textarea><br/>
+                    </div>
+                    <div class="quiz_newquestion_textarea_block">
+                        <label for="quiz_newquestion_correctcomment" class="s3d-input-label s3d-input-label-above">__MSG__CORRECT_COMMENT__:</label>
+                        <textarea id="quiz_newquestion_correctcomment" class="quiz_newquestion_textearea" placeholder="__MSG__ENTER_A_CORRECT_COMMENT__"></textarea><br/>
+                    </div>
+                    <div class="quiz_newquestion_textarea_block">
+                        <label for="quiz_newquestion_incorrectcomment" class="s3d-input-label s3d-input-label-above">__MSG__INCORRECT_COMMENT__:</label>
+                        <textarea id="quiz_newquestion_incorrectcomment" class="quiz_newquestion_textearea" placeholder="__MSG__ENTER_AN_INCORRECT_COMMENT__"></textarea><br/>
+                    </div>
+                    <div id="quiz_newquestion_table_div">
+                        <table id="quiz_newquestion_table">
+                            <tbody id="quiz_newquestion_tablebody">
+                                <tr class="cant_be_deleted">
+                                    <th id="quiz_newquestion_th_option">__MSG__OPTIONS__</th>
+                                    <th id="quiz_newquestion_th_correct">__MSG__CORRECT__</th>
+                                </tr>
+                                <tr id="quiz_newquestion_answer_0" class="cant_be_deleted">
+                                    <td><input type="text" class="quiz_newquestion_answer newquestion_required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
+                                    <td class="quiz_newquestion_checkbox_td">
+                                        <div class="quiz_newquestion_checkbox_div">
+                                            <input type="checkbox" class="quiz_newquestion_checkbox" size="1"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="quiz_newquestion_answer_1" class="cant_be_deleted">
+                                    <td><input type="text" class="quiz_newquestion_answer newquestion_required" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
+                                    <td class="quiz_newquestion_checkbox_td">
+                                        <div class="quiz_newquestion_checkbox_div">
+                                            <input type="checkbox" class="quiz_newquestion_checkbox" size="1"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="quiz_newquestion_modifytable">
+                        <div id="quiz_newquestion_add_newanswer">
+                            <button type="button" id="quiz_newquestion_add_button" class="s3d-button s3d-link-button s3d-action" title="__MSG__ADD_AN_ANSWER__">
+                                <div id="quiz_newquestion_add_div">
+                                    <span id="quiz_newquestion_add_tag"></span>
+                                    <span>__MSG__ADD_AN_ANSWER__</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div id="quiz_newquestion_remove_lastanswer">
+                            <button type="button" id="quiz_newquestion_remove_button" class="s3d-button s3d-link-button s3d-action" title="__MSG__REMOVE_LAST_ANSWER__">
+                                <div id="quiz_newquestion_remove_div">
+                                    <span id="quiz_newquestion_remove_tag"></span>
+                                    <span>__MSG__REMOVE_ANSWER__</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="fl-force-right">
+                    <button type="button" class="s3d-button s3d-header-button" id="quiz_newquestion_addtolist" disabled="disabled" title="__MSG__ADD_QUESTION_TOLIST__">
+                        __MSG__ADD_QUESTION__
+                    </button>
+                </div>
+            </div>
+            <button type="button" id="quiz_newquestion_raquo_right" class="s3d-button quiz_newquestion_addtolist" disabled="disabled" title="__MSG__ADD_QUESTION_TOLIST__"></button>
+        </div>
+        <div id="quiz_questionslist_container">
+            <h2 id="quiz_questionslist_header" class="s3d-bold">Questions list</h2>
+            <div id="quiz_questionslist_createditems"></div>
+        </div>
     </div>
     <!-- The submit and cancel button -->
     <div class="fl-force-right">
-    	<button type="button" class="s3d-button s3d-link-button" id="quiz_container_cancel_button">__MSG__CANCEL__</button>
-    	<button type="button" class="s3d-button s3d-overlay-button" id="quiz_container_create_button">__MSG__SAVE__</button>
-   	</div>
-   	<div id="quiz_container_questiondetails" class="s3d-dialog s3d-dialog-container" style="display:none;"><!----></div>
+        <button type="button" class="s3d-button s3d-link-button" id="quiz_settings_cancel_button">
+            __MSG__DONT_ADD_QUIZ__
+        </button>
+        <button type="button" class="s3d-button s3d-overlay-button" id="quiz_settings_create_button" disabled="disabled">
+            __MSG__ADD_QUIZ__
+        </button>
+    </div>
+    <div id="quiz_settings_questiondetails" class="s3d-dialog s3d-dialog-container" style="display:none;">
+        <!---->
+    </div>
 </div>
 
-<div id="quiz_newquestion_add_newanswer_table_template" style="display:none;"><!--
+<!-- MAIN VIEW -->
+<div id="quiz_displaying" class="fl-widget-content s3d-widget-content" style="display:none;">
+    <h1 class="quizName"><!-- where the quiz name goes --></h1>
+    <div class="quizArea">
+        <div class="quizHeader">
+            <!-- where the quiz main copy goes -->
+            <a class="button startQuiz " href="">__MSG__GET_STARTED__</a>
+        </div>
+        <!-- where the quiz gets built -->
+    </div>
+    <div class="quizResults">
+        <h3 class="quizScore">__MSG__YOUR_SCORE__: <span><!-- where the quiz score goes --></span></h3>
+        <h3 class="quizLevel"><strong>__MSG__RANKING__: </strong><span><!-- where the quiz ranking level goes --></span></h3>
+        <div class="quizResultsCopy">
+            <!-- where the quiz result copy goes -->
+        </div>
+        <a class="button restartQuiz " href="">__MSG__RESTART__</a>
+    </div>
+</div>
+
+<div id="quiz_newquestion_add_newanswer_table_template"  style="display:none;"><!--
   	<tr id="quiz_newquestion_answer_${answersNumber}">
 		<td><input type="text" class="quiz_newquestion_answer" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
 		<td class="quiz_newquestion_checkbox_td">
 			<div class="quiz_newquestion_checkbox_div">
-				<input type="checkbox" id="quiz_newquestion_checkbox" size="1"/>
+				<input type="checkbox" class="quiz_newquestion_checkbox" size="1"/>
 			</div>
 		</td>
 	</tr>
@@ -136,7 +164,7 @@
 		<td><input type="text" class="quiz_questiondetails_answer" placeholder="__MSG__ENTER_AN_ANSWER__"/></td>
 		<td class="quiz_questiondetails_checkbox_td">
 			<div class="quiz_questiondetails_checkbox_div">
-				<input type="checkbox" id="quiz_questiondetails_checkbox" size="1"/>
+				<input type="checkbox" class="quiz_questiondetails_checkbox" size="1"/>
 			</div>
 		</td>
 	</tr>
@@ -146,7 +174,7 @@
   		<ul class="quiz_questionslist_sortablelist">
   			{for question in questions}
 		  		<li id="quiz_questionslist_item_${question_index}">
-		  			<button type="button" class="quiz_questionslist_details_button s3d-button s3d-link-button s3d-action">
+		  			<button type="button" class="quiz_questionslist_details_button s3d-button s3d-link-button s3d-action" title="__MSG__SEE_THE_QUESTION__">
 			        	<div class="quiz_questionslist_showdetails_div">
 			        		<span class="quiz_questionslist_showdetails_tag"></span>
 			        	</div>
@@ -180,25 +208,27 @@
 			</div>
 			<div id="quiz_questiondetails_table_div">
 				<table id="quiz_questiondetails_table">
-					<tr class="cant_be_deleted">
-						<th id="quiz_questiondetails_th_option">__MSG__OPTIONS__</th>
-						<th id="quiz_questiondetails_th_correct">__MSG__CORRECT__</th>
-					</tr>
-					{for answer in a}	
-						<tr id="quiz_questiondetails_answer_${answer_index}" {if answer_index === 1 || answer_index === 0} class="cant_be_deleted" {/if}>
-							<td><input type="text" class="quiz_questiondetails_answer {if answer_index === 1 || answer_index === 0} questiondetails_required {/if}" disabled="disabled" placeholder="__MSG__ENTER_AN_ANSWER__"/ value="${answer.option}"></td>
-							<td class="quiz_questiondetails_checkbox_td">
-								<div class="quiz_questiondetails_checkbox_div">
-									<input type="checkbox" class="quiz_questiondetails_checkbox" disabled="disabled" size="1" {if answer.correct} checked {/if}/>
-								</div>
-							</td>
-						</tr>
-					{/for}
+				    <tbody id="quiz_questiondetails_tablebody">
+    					<tr class="cant_be_deleted">
+    						<th id="quiz_questiondetails_th_option">__MSG__OPTIONS__</th>
+    						<th id="quiz_questiondetails_th_correct">__MSG__CORRECT__</th>
+    					</tr>
+    					{for answer in a}	
+    						<tr id="quiz_questiondetails_answer_${answer_index}" {if answer_index == 1 || answer_index == 0} class="cant_be_deleted" {/if}>
+    							<td><input type="text" class="quiz_questiondetails_answer {if answer_index == 1 || answer_index == 0} questiondetails_required {/if}" disabled="disabled" placeholder="__MSG__ENTER_AN_ANSWER__"/ value="${answer.option}"></td>
+    							<td class="quiz_questiondetails_checkbox_td">
+    								<div class="quiz_questiondetails_checkbox_div">
+    									<input type="checkbox" class="quiz_questiondetails_checkbox" disabled="disabled" size="1" {if answer.correct} checked {/if}/>
+    								</div>
+    							</td>
+    						</tr>
+    					{/for}
+					</tbody>
 				</table>
 			</div>
 			<div id="quiz_questiondetails_modifytable">
 				<div id="quiz_questiondetails_add_newanswer">
-					<button type="button" id="quiz_questiondetails_add_button" class="s3d-button s3d-link-button s3d-action" disabled="disabled">
+					<button type="button" id="quiz_questiondetails_add_button" class="s3d-button s3d-link-button s3d-action" title="__MSG__ADD_AN_ANSWER__" disabled="disabled">
 						<div id="quiz_questiondetails_add_div">
 							<span id="quiz_questiondetails_add_tag"></span>
 							<span>__MSG__ADD_AN_ANSWER__</span>
@@ -206,23 +236,24 @@
 					</button>
 				</div>
 				<div id="quiz_questiondetails_remove_lastanswer">
-					<button type="button" id="quiz_questiondetails_remove_button" class="s3d-button s3d-link-button s3d-action" disabled="disabled">
+					<button type="button" id="quiz_questiondetails_remove_button" class="s3d-button s3d-link-button s3d-action" title="__MSG__REMOVE_LAST_ANSWER__" disabled="disabled">
 						<div id="quiz_questiondetails_remove_div">
 							<span id="quiz_questiondetails_remove_tag"></span>
-							<span>__MSG__REMOVE_LAST_ANSWER__</span>
+							<span>__MSG__REMOVE_ANSWER__</span>
 						</div>
 					</button>
 				</div>
 			</div>
 		</form>
-		<div class="fl-force-right">
-			<button type="button" class="s3d-button s3d-header-button s3d-disabled" id="quiz_questiondetails_savemodification" disabled="disabled">
-				__MSG__SAVE_MODIFICATION__
-			</button>
+		<div id="quiz_questiondetails_modifydiv" class="fl-force-right">
 			<button type="button" class="s3d-button s3d-header-button" id="quiz_questiondetails_modify">
 				__MSG__MODIFY_QUESTION__
 			</button>
 		</div>
+		<div id="quiz_questiondetails_savediv" class="fl-force-right" style="display:none;">
+            <button type="button" class="s3d-button s3d-link-button" id="quiz_questiondetails_cancelmodification">__MSG__CANCEL__</button>
+            <button type="button" class="s3d-button s3d-header-button s3d-disabled" id="quiz_questiondetails_savemodification">__MSG__SAVE_MODIFICATION__</button>
+        </div>
 	</div>
 --></div>
 
