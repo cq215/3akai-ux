@@ -3,11 +3,10 @@ require(['jquery'], function (jQuery) {
         // Setup Sexy Quiz
         $.slickQuiz = function(element, options) {
             var rootel = "#" + $($(element).parent()[0]).parent()[0].id; 
-            alert(rootel);  
             var $element = $(element, rootel),
                  element = element;
             var plugin = this;
-    
+            
             plugin.config = $.extend( {
                 checkAnswerText:  'Check My Answer!',
                 nextQuestionText: 'Next &raquo;',
@@ -54,8 +53,18 @@ require(['jquery'], function (jQuery) {
             var questionCount = questions.length;
     
             plugin.method = {
+                cleanQuiz: function() {
+                    if ($(targets.quizHeader).find('p').length) {
+                        $(targets.quizHeader).find('p').remove('p');
+                        $(targets.quizArea).find('.questions').remove('ol');
+                        $(targets.quizResultsCopy).html('');
+                    }
+                    
+                },
+                
                 // Sets up the questions and answers based on above array
                 setupQuiz: function() {
+                    plugin.method.cleanQuiz();
                     $(targets.quizName).hide().html(quizValues.info.name).fadeIn(1000);
                     $(targets.quizHeader).hide().prepend('<p>' + quizValues.info.main + '</p>').fadeIn(1000);
                     $(targets.quizResultsCopy).append(quizValues.info.results);
@@ -192,7 +201,7 @@ require(['jquery'], function (jQuery) {
     
                     // Verify all true answers (and no false ones) were submitted
                     correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
-    
+                    
                     // Toggle responses based on submission
                     questionLI.find('.answers').hide();
                     questionLI.find('.responses').show();
@@ -331,7 +340,14 @@ require(['jquery'], function (jQuery) {
             plugin.init = function() {
                 // Setup quiz
                 plugin.method.setupQuiz();
-    
+                
+                //Unbind and die the previous triggers
+                $(triggers.starter).unbind('click');
+                $(triggers.restarter).unbind('click');
+                $(triggers.checker).die('click');
+                $(triggers.back).die('click');
+                $(triggers.next).die('click');
+                
                 // Bind "start" button
                 $(triggers.starter).bind('click', function(e) {
                     e.preventDefault();
