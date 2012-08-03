@@ -47,17 +47,18 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var questionCanBeSaved = false;
         var questionCanBeModified = true;  
         var json = false;   
-           
+          
+        var rootel = "#" + tuid;   
         //Node
-        var $quizNewQuestionForm = $('#quiz_newquestion_form');
-        var $quizNewQuestionAddButton = $('#quiz_newquestion_add_button');
-        var $quizNewQuestionRemoveButton = $('#quiz_newquestion_remove_button');
-        var $quizNewQuestionAddToList = $('#quiz_newquestion_addtolist');
-        var $quizNewQuestionRaquoRight = $('#quiz_newquestion_raquo_right');
-      	var $quizQuestionsListCreatedItems = $('#quiz_questionslist_createditems');
-        var $quizQuestionsListRemoveButton = $('.quiz_questionslist_remove_button');
-        var $quizSettingsQuestionDetails = $('#quiz_settings_questiondetails'); 
-        var $quizQuestionDetailsClose = $('#quiz_questiondetails_close');
+        var $quizNewQuestionForm = $('#quiz_newquestion_form', rootel);
+        var $quizNewQuestionAddButton = $('#quiz_newquestion_add_button', rootel);
+        var $quizNewQuestionRemoveButton = $('#quiz_newquestion_remove_button', rootel);
+        var $quizNewQuestionAddToList = $('#quiz_newquestion_addtolist', rootel);
+        var $quizNewQuestionRaquoRight = $('#quiz_newquestion_raquo_right', rootel);
+      	var $quizQuestionsListCreatedItems = $('#quiz_questionslist_createditems', rootel);
+        var $quizQuestionsListRemoveButton = $('.quiz_questionslist_remove_button', rootel);
+        var $quizSettingsQuestionDetails = $('#quiz_settings_questiondetails', rootel); 
+        var $quizQuestionDetailsClose = $('#quiz_questiondetails_close', rootel);
         
         //Class
         var mainInformationsRequired = '.main_informations_required';
@@ -143,23 +144,23 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 container = '#quiz_' + newQuestionContainer;
             }
             
-            var question = $(container + '_question').val();
-            var answer0 = $($(container + '_answer_0').find('input[type=text]')[0]).val();
-            var answer1 = $($(container + '_answer_1').find('input[type=text]')[0]).val();
+            var question = $(container + '_question', rootel).val();
+            var answer0 = $($(container + '_answer_0', rootel).find('input[type=text]')[0]).val();
+            var answer1 = $($(container + '_answer_1', rootel).find('input[type=text]')[0]).val();
             
             // check if the user didn't just fill in some spaces
             return (question.replace(/ /g, "") !== "" && answer0.replace(/ /g, "") !== "" && answer1.replace(/ /g, "") !== "" && checkIfOneAnswerChecked(container));
         };
         
         var checkIfOneAnswerChecked = function(container) {
-            var rows = $(container + '_table').find('tr');
+            var rows = $(container + '_table', rootel).find('tr');
             
             for (var i = 1 ; i < rows.length ; i++) {
-                var answerInputs = $(rows[i]).find('td');
-                var answerTextInput = $($(answerInputs[0]).find('input')).val();
+                var answerInputs = $(rows[i], rootel).find('td');
+                var answerTextInput = $($(answerInputs[0], rootel).find('input')).val();
                 
                 if (checkIfAnswerValid(answerTextInput)) {
-                    if($($(answerInputs[1]).find('input')).is(':checked')) {
+                    if($($(answerInputs[1], rootel).find('input')).is(':checked')) {
                         return true;
                     }
                 }
@@ -168,14 +169,14 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         };
         
         var checkIfMainInformationsInputValid = function() {
-            var name = $(quizMainInformationsName).val();
-            var description = $(quizMainInformationsDescription).val();
-            var comment = $(quizMainInformationsComment).val();
-            var level1 = $(quizMainInformationsLevel1).val();
-            var level2 = $(quizMainInformationsLevel2).val();
-            var level3 = $(quizMainInformationsLevel3).val();
-            var level4 = $(quizMainInformationsLevel4).val();
-            var level5 = $(quizMainInformationsLevel5).val();
+            var name = $(quizMainInformationsName, rootel).val();
+            var description = $(quizMainInformationsDescription, rootel).val();
+            var comment = $(quizMainInformationsComment, rootel).val();
+            var level1 = $(quizMainInformationsLevel1, rootel).val();
+            var level2 = $(quizMainInformationsLevel2, rootel).val();
+            var level3 = $(quizMainInformationsLevel3, rootel).val();
+            var level4 = $(quizMainInformationsLevel4, rootel).val();
+            var level5 = $(quizMainInformationsLevel5, rootel).val();
             
             // check if the user didn't just fill in some spaces
             return (name.replace(/ /g, "") !== "" 
@@ -208,16 +209,16 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
             
             questionsNumber++;
-            var rows = $(container + '_table').find('tr');
+            var rows = $(container + '_table', rootel).find('tr');
             var availableAnswers = 0;
             
             for (var i = 1 ; i < rows.length ; i++) {
                 answerCheckboxInput = false;
-                answerInputs = $(rows[i]).find('td');
-                answerTextInput = $($(answerInputs[0]).find('input')).val();
+                answerInputs = $(rows[i], rootel).find('td');
+                answerTextInput = $($(answerInputs[0], rootel).find('input')).val();
                 
                 if (checkIfAnswerValid(answerTextInput)) {
-                    if($($(answerInputs[1]).find('input')).is(':checked')) {
+                    if($($(answerInputs[1], rootel).find('input')).is(':checked')) {
                         answerCheckboxInput = true;
                     }
                     answersTable[availableAnswers++] = {
@@ -227,8 +228,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 }
             }
             
-            var correctComment = $(container + '_correctcomment').val();
-            var incorrectComment = $(container + '_incorrectcomment').val();
+            var correctComment = $(container + '_correctcomment', rootel).val();
+            var incorrectComment = $(container + '_incorrectcomment', rootel).val();
             
             if (correctComment == '') {
                 correctComment = sakai.api.i18n.getValueForKey("DEFAULT_CORRECT_COMMENT", "quiz");
@@ -238,7 +239,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
             
             var contentQuestion = {
-                "q" : $(container + '_question').val(),
+                "q" : $(container + '_question', rootel).val(),
                 "a" : answersTable,
                 "correct" : correctComment,
                 "incorrect" : incorrectComment
@@ -254,12 +255,12 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
        
         var checkIfQuizValid = function() {
             if (checkIfMainInformationsInputValid() && questionsList.length) {
-                enableElements($(quizSettingsCreateButton));
+                enableElements($(quizSettingsCreateButton, rootel));
                 quizCanBeAdded = true;
             } 
             else {
                 if(quizCanBeAdded) {
-                    disableElements($(quizSettingsCreateButton));
+                    disableElements($(quizSettingsCreateButton, rootel));
                     quizCanBeAdded = false;
                 }
             }
@@ -286,7 +287,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             removeQuestionsListBinding();
             addQuestionsListBinding();
 
-            $(quizQuestionsListSortableList).sortable({
+            $(quizQuestionsListSortableList, rootel).sortable({
                 connectWith : quizQuestionsListSortableList,
                 revert : true,
                 opacity : 0.5,
@@ -300,7 +301,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var actualizeQuestionList = function() {
             var tempList = [];
             var i = 0;
-            $(quizQuestionsListSortableList).find('li').each(function() {
+            $(quizQuestionsListSortableList, rootel).find('li').each(function() {
                 var index = $(this).attr('id').split(quizQuestionsListItem)[1];
                 tempList[i++] = questionsList[index];
             });
@@ -309,39 +310,39 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         
         var saveQuizToJSON = function() {
             var mainInformations = {
-                "name" : $(quizMainInformationsName).val(),
-                "main" : $(quizMainInformationsDescription).val(),
-                "results" : $(quizMainInformationsComment).val(),
-                "level1" : $(quizMainInformationsLevel1).val(),
-                "level2" : $(quizMainInformationsLevel2).val(),
-                "level3" : $(quizMainInformationsLevel3).val(),
-                "level4" : $(quizMainInformationsLevel4).val(),
-                "level5" : $(quizMainInformationsLevel5).val(),
+                "name" : $(quizMainInformationsName, rootel).val(),
+                "main" : $(quizMainInformationsDescription, rootel).val(),
+                "results" : $(quizMainInformationsComment, rootel).val(),
+                "level1" : $(quizMainInformationsLevel1, rootel).val(),
+                "level2" : $(quizMainInformationsLevel2, rootel).val(),
+                "level3" : $(quizMainInformationsLevel3, rootel).val(),
+                "level4" : $(quizMainInformationsLevel4, rootel).val(),
+                "level5" : $(quizMainInformationsLevel5, rootel).val(),
             };
 
             var quizJSON = {
                 "info" : mainInformations,
                 "questions" : questionsList,
-                "random" : $(quizQuestionsListCheckbox).is(':checked')
+                "random" : $(quizQuestionsListCheckbox, rootel).is(':checked')
             };
             return quizJSON;
         };
         
         var resetQuestionInputs = function() {
-            $(quizNewQuestionQuestion).val('');
-            $(quizNewQuestionCorrectComment).val('');
-            $(quizNewQuestionIncorrectComment).val('');
+            $(quizNewQuestionQuestion, rootel).val('');
+            $(quizNewQuestionCorrectComment, rootel).val('');
+            $(quizNewQuestionIncorrectComment, rootel).val('');
 
             disableElements($quizNewQuestionAddToList);
             disableElements($quizNewQuestionRaquoRight);
             questionCanBeSaved = false;
-            $(quizNewQuestionTableBody).find('tr').each(function() {
+            $(quizNewQuestionTableBody, rootel).find('tr').each(function() {
                 if ($(this).attr('class') != cantBeDeleted) {
                     $(this).remove();
                 } 
                 else {
-                    $($(quizNewQuestionAnswer_0).find('input[type=text]')[0]).val('');
-                    $($(quizNewQuestionAnswer_1).find('input[type=text]')[0]).val('');
+                    $($(quizNewQuestionAnswer_0, rootel).find('input[type=text]')[0]).val('');
+                    $($(quizNewQuestionAnswer_1, rootel).find('input[type=text]')[0]).val('');
                     $($(this).find('input[type=checkbox]')[0]).attr('checked', false);
                 }
             });
@@ -381,7 +382,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 "info" : json.info,
                 "questions" : json.questions
             };
-            $('#quiz_displaying').slickQuiz({"json": jsonTmp, 
+            
+            $(rootel + ' #quiz_displaying').slickQuiz({"json": jsonTmp, 
                                              "checkAnswerText": sakai.api.i18n.getValueForKey("CHECK_ANSWER_TEXT", "quiz"), 
                                              "nextQuestionText": sakai.api.i18n.getValueForKey("NEXT_QUESTION_TEXT", "quiz"),
                                              "backButtonText": sakai.api.i18n.getValueForKey("BACK_BUTTON_TEXT", "quiz"),
@@ -391,92 +393,92 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var fillSettings = function(success, data) {
             if (success) {
                 json = data;
-                $(quizMainInformationsName).val(json.info.name);
-                $(quizMainInformationsDescription).val(json.info.main);
-                $(quizMainInformationsComment).val(json.info.results);
-                $(quizMainInformationsLevel1).val(json.info.level1);
-                $(quizMainInformationsLevel2).val(json.info.level2);
-                $(quizMainInformationsLevel3).val(json.info.level3);
-                $(quizMainInformationsLevel4).val(json.info.level4);
-                $(quizMainInformationsLevel5).val(json.info.level5);
+                $(quizMainInformationsName, rootel).val(json.info.name);
+                $(quizMainInformationsDescription, rootel).val(json.info.main);
+                $(quizMainInformationsComment, rootel).val(json.info.results);
+                $(quizMainInformationsLevel1, rootel).val(json.info.level1);
+                $(quizMainInformationsLevel2, rootel).val(json.info.level2);
+                $(quizMainInformationsLevel3, rootel).val(json.info.level3);
+                $(quizMainInformationsLevel4, rootel).val(json.info.level4);
+                $(quizMainInformationsLevel5, rootel).val(json.info.level5);
                 questionsList = json.questions;
                 if (json.random) {
-                    $(quizQuestionsListCheckbox).attr('checked', true);
+                    $(quizQuestionsListCheckbox, rootel).attr('checked', true);
                 }
                 renderQuestionsList();
-                enableElements($(quizSettingsCreateButton));
+                enableElements($(quizSettingsCreateButton, rootel));
                 quizCanBeAdded = true;
             }
         };
 
         var addNewQuestionRequiredBinding = function() {
-            $(newQuestionRequired).bind('keyup', newQuestionRequiredEvent);
-            $(quizNewQuestionCheckbox).bind('click', newQuestionRequiredEvent);
+            $(newQuestionRequired, rootel).bind('keyup', newQuestionRequiredEvent);
+            $(quizNewQuestionCheckbox, rootel).bind('click', newQuestionRequiredEvent);
         };
         
         var removeNewQuestionRequiredBinding = function() {
-            $(newQuestionRequired).unbind('keyup', newQuestionRequiredEvent);
-            $(quizNewQuestionCheckbox).unbind('click', newQuestionRequiredEvent);
+            $(newQuestionRequired, rootel).unbind('keyup', newQuestionRequiredEvent);
+            $(quizNewQuestionCheckbox, rootel).unbind('click', newQuestionRequiredEvent);
         };
         
         var addQuestionsListBinding = function() {
-           $(quizQuestionsListDetailsButton).bind('click', showQuestionDetailsEvent);
-           $(quizQuestionsListRemoveButton).bind('click', removeQuestionEvent);
+           $(quizQuestionsListDetailsButton, rootel).bind('click', showQuestionDetailsEvent);
+           $(quizQuestionsListRemoveButton, rootel).bind('click', removeQuestionEvent);
         };
         
         var removeQuestionsListBinding = function() {
-           $(quizQuestionsListDetailsButton).unbind('click', showQuestionDetailsEvent);
-           $(quizQuestionsListRemoveButton).unbind('click', removeQuestionEvent);
+           $(quizQuestionsListDetailsButton, rootel).unbind('click', showQuestionDetailsEvent);
+           $(quizQuestionsListRemoveButton, rootel).unbind('click', removeQuestionEvent);
         };
         
         var addQuestionDetailsGeneralBinding = function() {
-            $(quizQuestionDetailsClose).bind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify).bind('click', modifyEvent); 
-            $(quizQuestionDetailsSaveModification).bind('click', saveModificationEvent); 
-            $(quizQuestionDetailsCancelModification).bind('click', cancelModificationEvent); 
-            $(quizQuestionDetailsAddButton).bind('click', questionDetailsAddAnswerEvent);
-            $(quizQuestionDetailsRemoveButton).bind('click', questionDetailsRemoveAnswerEvent);
+            $(quizQuestionDetailsClose, rootel).bind('click', questionDetailsCloseEvent);
+            $(quizQuestionDetailsModify, rootel).bind('click', modifyEvent); 
+            $(quizQuestionDetailsSaveModification, rootel).bind('click', saveModificationEvent); 
+            $(quizQuestionDetailsCancelModification, rootel).bind('click', cancelModificationEvent); 
+            $(quizQuestionDetailsAddButton, rootel).bind('click', questionDetailsAddAnswerEvent);
+            $(quizQuestionDetailsRemoveButton, rootel).bind('click', questionDetailsRemoveAnswerEvent);
         };
         
         var removeQuestionDetailsGeneralBinding = function() {
-            $(quizQuestionDetailsClose).unbind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify).unbind('click', modifyEvent); 
-            $(quizQuestionDetailsSaveModification).unbind('click', saveModificationEvent); 
-            $(quizQuestionDetailsCancelModification).unbind('click', cancelModificationEvent); 
-            $(quizQuestionDetailsAddButton).unbind('click', questionDetailsAddAnswerEvent);
-            $(quizQuestionDetailsRemoveButton).unbind('click', questionDetailsRemoveAnswerEvent);
+            $(quizQuestionDetailsClose, rootel).unbind('click', questionDetailsCloseEvent);
+            $(quizQuestionDetailsModify, rootel).unbind('click', modifyEvent); 
+            $(quizQuestionDetailsSaveModification, rootel).unbind('click', saveModificationEvent); 
+            $(quizQuestionDetailsCancelModification, rootel).unbind('click', cancelModificationEvent); 
+            $(quizQuestionDetailsAddButton, rootel).unbind('click', questionDetailsAddAnswerEvent);
+            $(quizQuestionDetailsRemoveButton, rootel).unbind('click', questionDetailsRemoveAnswerEvent);
         };
         
         var addQuestionDetailsSpecificBinding = function() {
-            $(questionDetailsRequired).bind('keyup', modifyQuestionRequiredEvent);
-            $(quizQuestionDetailsCheckbox).bind('click', modifyQuestionRequiredEvent);
+            $(questionDetailsRequired, rootel).bind('keyup', modifyQuestionRequiredEvent);
+            $(quizQuestionDetailsCheckbox, rootel).bind('click', modifyQuestionRequiredEvent);
         };
         
         var removeQuestionDetailsSpecificBinding = function() {
-            $(questionDetailsRequired).unbind('keyup', modifyQuestionRequiredEvent);
-            $(quizQuestionDetailsCheckbox).unbind('click', modifyQuestionRequiredEvent);
+            $(questionDetailsRequired, rootel).unbind('keyup', modifyQuestionRequiredEvent);
+            $(quizQuestionDetailsCheckbox, rootel).unbind('click', modifyQuestionRequiredEvent);
         };
         
         var addGeneralBinding = function() {
-            $(mainInformationsRequired).bind('keyup', mainInformationsRequiredEvent); 
+            $(mainInformationsRequired, rootel).bind('keyup', mainInformationsRequiredEvent); 
             addNewQuestionRequiredBinding();
             $quizNewQuestionAddButton.bind('click', addAnswerEvent);
             $quizNewQuestionRemoveButton.bind('click', removeAnswerEvent);
             $quizNewQuestionRaquoRight.bind('click', addToListEvent);
             $quizNewQuestionAddToList.bind('click', addToListEvent);
-            $(quizSettingsCancelButton).bind('click', cancelButtonEvent);
-            $(quizSettingsCreateButton).bind('click', createButtonEvent);
+            $(quizSettingsCancelButton, rootel).bind('click', cancelButtonEvent);
+            $(quizSettingsCreateButton, rootel).bind('click', createButtonEvent);
         };
         
         var removeGeneralBinding = function() {
-            $(mainInformationsRequired).unbind('keyup', mainInformationsRequiredEvent);
+            $(mainInformationsRequired, rootel).unbind('keyup', mainInformationsRequiredEvent);
             removeNewQuestionRequiredBinding();
             $quizNewQuestionAddButton.unbind('click', addAnswerEvent);
             $quizNewQuestionRemoveButton.unbind('click', removeAnswerEvent);
             $quizNewQuestionRaquoRight.unbind('click', addToListEvent);
             $quizNewQuestionAddToList.unbind('click', addToListEvent);
-            $(quizSettingsCancelButton).unbind('click', cancelButtonEvent);
-            $(quizSettingsCreateButton).unbind('click', createButtonEvent);
+            $(quizSettingsCancelButton, rootel).unbind('click', cancelButtonEvent);
+            $(quizSettingsCreateButton, rootel).unbind('click', createButtonEvent);
         };
         
         var mainInformationsRequiredEvent = function() {
@@ -503,7 +505,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             var templateData = {
                 'answersNumber' : answersNumber
             };
-            $(quizNewQuestionTableBody).append(sakai.api.Util.TemplateRenderer(quizNewQuestionAddNewAnswerTableTemplate, templateData));
+            $(quizNewQuestionTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizNewQuestionAddNewAnswerTableTemplate, templateData));
             
             removeNewQuestionRequiredBinding();
             addNewQuestionRequiredBinding();
@@ -512,8 +514,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var removeAnswerEvent = function() {
             if (answersNumber > minAnswersNumber) {
                 answersNumber--;
-                var rows = $(quizNewQuestionTableBody).find('tr');
-                $(rows[rows.length - 1]).remove();
+                var rows = $(quizNewQuestionTableBody, rootel).find('tr');
+                $(rows[rows.length - 1], rootel).remove();
             }
         };
         
@@ -529,8 +531,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             var templateData = questionsList[index];
             questionInModification = index;
             answersNumberQuestionDetails = templateData.a.length - 1;
-            $(quizSettingsQuestionDetails).show();
-            $(quizSettingsQuestionDetails).html(sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData));
+            $(quizSettingsQuestionDetails, rootel).show();
+            $(quizSettingsQuestionDetails, rootel).html(sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData));
             
             removeQuestionDetailsGeneralBinding();
             removeQuestionDetailsSpecificBinding();
@@ -547,7 +549,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         };
        
         var questionDetailsCloseEvent = function() {
-            $(quizSettingsQuestionDetails).hide();
+            $(quizSettingsQuestionDetails, rootel).hide();
         };
 
         var modifyEvent = function() {
@@ -557,22 +559,22 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(this).parent().parent().find('textarea').each(function() {
                 enableElements($(this));
             });
-            enableElements($(quizQuestionDetailsRemoveButton));
-            enableElements($(quizQuestionDetailsAddButton));
-            $(quizQuestionDetailsModifyDiv).hide();
-            $(quizQuestionDetailsSaveDiv).show();
+            enableElements($(quizQuestionDetailsRemoveButton, rootel));
+            enableElements($(quizQuestionDetailsAddButton, rootel));
+            $(quizQuestionDetailsModifyDiv, rootel).hide();
+            $(quizQuestionDetailsSaveDiv, rootel).show();
         };
 
         var saveModificationEvent = function() {
             if (questionCanBeModified) {
                 constructQuestionToAdd(questionInModification);
                 renderQuestionsList();
-                $(quizSettingsQuestionDetails).hide();
+                $(quizSettingsQuestionDetails, rootel).hide();
             }
         };
             
         var cancelModificationEvent = function() {
-            $(quizSettingsQuestionDetails).hide();
+            $(quizSettingsQuestionDetails, rootel).hide();
         };
         
         var questionDetailsAddAnswerEvent = function() {
@@ -580,7 +582,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             var templateData = {
                 'answersNumber' : answersNumberQuestionDetails
             };
-            $(quizQuestionDetailsTableBody).append(sakai.api.Util.TemplateRenderer(quizQuestionsDetailsAddNewAnswerTableTemplate, templateData));
+            $(quizQuestionDetailsTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizQuestionsDetailsAddNewAnswerTableTemplate, templateData));
             
             removeQuestionDetailsSpecificBinding();
             addQuestionDetailsSpecificBinding();
@@ -589,20 +591,20 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var questionDetailsRemoveAnswerEvent = function() {
             if (answersNumberQuestionDetails > minAnswersNumber) {
                 answersNumberQuestionDetails--;
-                var rows = $(quizQuestionDetailsTableBody).find('tr');
-                $(rows[rows.length - 1]).remove();
+                var rows = $(quizQuestionDetailsTableBody, rootel).find('tr');
+                $(rows[rows.length - 1], rootel).remove();
             }
         };
         
         var modifyQuestionRequiredEvent = function() {
             // enable the save button
             if (checkIfQuestionInputValid(true)) {
-                enableElements($(quizQuestionDetailsSaveModification));
+                enableElements($(quizQuestionDetailsSaveModification, rootel));
                 questionCanBeModified = true;
             } 
             else {
                 if (questionCanBeModified) {
-                    disableElements($(quizQuestionDetailsSaveModification));
+                    disableElements($(quizQuestionDetailsSaveModification, rootel));
                     questionCanBeModified = false;
                 }
             }
@@ -624,12 +626,12 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 getFromJCR(true);
         	    renderQuestionsList();
                 // Show the search input textfield and save, search, cancel buttons
-                $('#quiz_settings').show();
-                $('#quiz_displaying').hide();
+                $('#quiz_settings', rootel).show();
+                $('#quiz_displaying', rootel).hide();
             }
             else {
-                $('#quiz_settings').hide();
-                $('#quiz_displaying').show();
+                $('#quiz_settings', rootel).hide();
+                $('#quiz_displaying', rootel).show();
                 getFromJCR(false);
             }
         };

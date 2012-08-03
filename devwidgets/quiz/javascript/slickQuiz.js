@@ -2,9 +2,10 @@ require(['jquery'], function (jQuery) {
     (function($){
         // Setup Sexy Quiz
         $.slickQuiz = function(element, options) {
-            var $element = $(element),
+            var rootel = "#" + $($(element).parent()[0]).parent()[0].id; 
+            alert(rootel);  
+            var $element = $(element, rootel),
                  element = element;
-    
             var plugin = this;
     
             plugin.config = $.extend( {
@@ -14,24 +15,24 @@ require(['jquery'], function (jQuery) {
                 randomSort: false
             }, options);
     
-            var selector = $(element).attr('id');
+            var selector = rootel + ' #' + $(element).attr('id');
     
             var triggers = {
-                starter:         '#' + selector + ' .startQuiz',
-                checker:         '#' + selector + ' .checkAnswer',
-                next:            '#' + selector + ' .nextQuestion',
-                back:            '#' + selector + ' .backToQuestion',
-                restarter:         '#' + selector + ' .restartQuiz'
+                starter:         selector + ' .startQuiz',
+                checker:         selector + ' .checkAnswer',
+                next:            selector + ' .nextQuestion',
+                back:            selector + ' .backToQuestion',
+                restarter:       selector + ' .restartQuiz'
             }
     
             var targets = {
-                quizName:        '#' + selector + ' .quizName',
-                quizArea:        '#' + selector + ' .quizArea',
-                quizResults:     '#' + selector + ' .quizResults',
-                quizResultsCopy: '#' + selector + ' .quizResultsCopy',
-                quizHeader:      '#' + selector + ' .quizHeader',
-                quizScore:       '#' + selector + ' .quizScore',
-                quizLevel:       '#' + selector + ' .quizLevel'
+                quizName:        selector + ' .quizName',
+                quizArea:        selector + ' .quizArea',
+                quizResults:     selector + ' .quizResults',
+                quizResultsCopy: selector + ' .quizResultsCopy',
+                quizHeader:      selector + ' .quizHeader',
+                quizScore:       selector + ' .quizScore',
+                quizLevel:       selector + ' .quizLevel'
             }
     
             // Set via json option or quizJSON variable (see slickQuiz-config.js)
@@ -98,8 +99,8 @@ require(['jquery'], function (jQuery) {
                             var input = '<input id="' + optionId + '" name="' + inputName
                                 + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
     
-                            var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
-    
+                          // var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
+                            var optionLabel = '<p for="' + optionId + '">' + answer.option + '</p>';
                             var answerContent = $('<li></li>')
                                 .append(input)
                                 .append(optionLabel);
@@ -140,7 +141,7 @@ require(['jquery'], function (jQuery) {
                 // Starts the quiz (hides start button and displays first question)
                 startQuiz: function(startButton) {
                     $(startButton).fadeOut(300, function(){
-                        firstQuestion = $('#' + selector + ' .questions li').first();
+                        firstQuestion = $(selector + ' .questions li').first();
                         if (firstQuestion.length) {
                             firstQuestion.fadeIn(500);
                         }
@@ -152,17 +153,17 @@ require(['jquery'], function (jQuery) {
                        $(targets.quizArea).fadeIn(500);
                        $(targets.quizHeader).fadeIn(500);
                        $(triggers.starter).fadeIn(500);
-                       $('.question').attr('class', 'question');
-                       $('.question').hide();
-                       $('.answers').show();
-                       $('input[type=checkbox]').attr('checked', false);
-                       $('input[type=radio]').attr('checked', false);
-                       $('.responses').hide();
-                       $('.correct').hide();
-                       $('.incorrect').hide();
-                       $('.backToQuestion').hide();
-                       $('.nextQuestion').hide();
-                       $('.checkAnswer').show();
+                       $(selector + ' .question').attr('class', 'question');
+                       $(selector + ' .question').hide();
+                       $(selector + ' .answers').show();
+                       $(selector + ' input[type=checkbox]').attr('checked', false);
+                       $(selector + ' input[type=radio]').attr('checked', false);
+                       $(selector + ' .responses').hide();
+                       $(selector + ' .correct').hide();
+                       $(selector + ' .incorrect').hide();
+                       $(selector + ' .backToQuestion').hide();
+                       $(selector + ' .nextQuestion').hide();
+                       $(selector + ' .checkAnswer').show();
                     });
                 },
                 
@@ -185,7 +186,7 @@ require(['jquery'], function (jQuery) {
                     // Collect the answers submitted
                     selectedAnswers = []
                     answerInputs.each( function() {
-                        inputValue = $(this).next('label').html();
+                        inputValue = $(this).next('p').html();
                         selectedAnswers.push(inputValue);
                     });
     
@@ -269,7 +270,7 @@ require(['jquery'], function (jQuery) {
     
                 // Hides all questions, displays the final score and some conclusive information
                 completeQuiz: function() {
-                    score = $('#' + selector + ' .correctResponse').length;
+                    score = $(selector + ' .correctResponse').length;
                     level = levels[plugin.method.calculateLevel(score)];
     
                     $(targets.quizScore + ' span').html(score + ' / ' + questionCount);

@@ -123,9 +123,8 @@
 #quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr td .quiz_newquestion_answer {
 	height: 25px;
 	max-height: 25px;
-	width: 100%;
+	width: 96.6%;
 	margin-bottom: 0px;
-	padding: 0px;
 	border:none;
 }
 #quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr .quiz_newquestion_checkbox_td .quiz_newquestion_checkbox_div {
@@ -384,9 +383,8 @@
 #quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr td .quiz_questiondetails_answer {
 	height: 25px;
 	max-height: 25px;
-	width: 100%;
+	width: 96.6%;
 	margin-bottom: 0px;
-	padding: 0px;
 	border:none;
 }
 #quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr .quiz_questiondetails_checkbox_td .quiz_questiondetails_checkbox_div {
@@ -491,6 +489,8 @@
     font-size: 14px;
     color: #666666;
     line-height: 1.1em;
+    text-align: justify;
+    word-wrap: break-word;
 }
 #quiz_displaying .quizName {
     border-bottom: 5px solid #2683BC;
@@ -543,8 +543,17 @@
     margin-left: 40px;
     margin-bottom: 20px;
 }
-#quiz_displaying .quizArea .questions li ul.answers label {
+#quiz_displaying .quizArea .questions li ul.answers li {
     display: inline-block;
+    width: 100%
+}
+#quiz_displaying .quizArea .questions li ul.answers li input {
+    float: left;
+}
+#quiz_displaying .quizArea .questions li ul.answers li p {
+    display: inline-block;
+    float: right;
+    width: 96%;
     min-width: 100px;
     margin-left: 10px;
     margin-bottom: 5px;
@@ -559,12 +568,6 @@
 #quiz_displaying .quizArea .questions li ul.responses .incorrect {
     color: #B5121B;
     font-weight: bold;
-}
-#quiz_displaying .quizArea .questions li a.buttonNextQuestion {
-    
-}
-#quiz_displaying .quizArea .questions li a.buttonCheckAnswer {
-    
 }
 #quiz_displaying .quizResults {
     margin-top: 20px;
