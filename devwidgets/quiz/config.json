@@ -6,7 +6,10 @@
             "bundle": "/devwidgets/quiz/bundles/default.properties",
             "description": "Quiz",
             "name": "Quiz"
-        }
+        },
+        "fr_FR": {
+            "bundle": "/devwidgets/mycontacts/bundles/fr_FR.properties"
+        },
     },
     "id": "quiz",
     "img": "/devwidgets/quiz/images/googlemaps.png",
