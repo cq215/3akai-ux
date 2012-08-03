@@ -135,7 +135,6 @@ require(['jquery'], function (jQuery) {
     
                     // Toggle the start button
                     $(triggers.starter).fadeIn(500);
-                    
                 },
     
                 // Starts the quiz (hides start button and displays first question)
@@ -147,7 +146,26 @@ require(['jquery'], function (jQuery) {
                         }
                     });
                 },
-    
+                
+                restartQuiz: function(restartButton) {
+                    $(targets.quizResults).fadeOut(300, function(){
+                       $(targets.quizArea).fadeIn(500);
+                       $(targets.quizHeader).fadeIn(500);
+                       $(triggers.starter).fadeIn(500);
+                       $('.question').attr('class', 'question');
+                       $('.question').hide();
+                       $('.answers').show();
+                       $('input[type=checkbox]').attr('checked', false);
+                       $('input[type=radio]').attr('checked', false);
+                       $('.responses').hide();
+                       $('.correct').hide();
+                       $('.incorrect').hide();
+                       $('.backToQuestion').hide();
+                       $('.nextQuestion').hide();
+                       $('.checkAnswer').show();
+                    });
+                },
+                
                 // Validates the response selection(s), displays explanations & next question button
                 checkAnswer: function(checkButton) {
                     questionLI   = $($(checkButton).parents('li.question')[0]);
@@ -306,23 +324,7 @@ require(['jquery'], function (jQuery) {
                         return true;
                     }
                     return false;
-                },
-                
-                restartQuiz: function(restartButton) {
-                    $(targets.quizResults).fadeOut(300, function(){
-                       $(targets.quizArea).fadeIn(500);
-                       $(targets.quizHeader).fadeIn(500);
-                       $(triggers.starter).fadeIn(500);
-                       $('.questions').find('.correctResponse').each(function() {
-                           $(this).attr('class', 'question');
-                       });
-                       $('.questions').find('.incorrectResponse').each(function() {
-                           $(this).attr('class', 'question');
-                       });
-                       $('.responses').hide();
-                    });
                 }
-               
             }
     
             plugin.init = function() {

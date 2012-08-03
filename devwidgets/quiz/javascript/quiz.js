@@ -87,6 +87,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var quizNewQuestionIncorrectComment = '#quiz_newquestion_incorrectcomment';
         var quizNewQuestionAnswer_0 = '#quiz_newquestion_answer_0';
         var quizNewQuestionAnswer_1 = '#quiz_newquestion_answer_1';
+        var quizQuestionsListCheckbox = '#quiz_questionslist_checkbox';
         var quizQuestionsListItem = 'quiz_questionslist_item_';
         var quizSettingsQuestionDetails = '#quiz_settings_questiondetails'; 
         var quizQuestionDetailsContainer = '#quiz_questiondetails_container';
@@ -320,7 +321,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
 
             var quizJSON = {
                 "info" : mainInformations,
-                "questions" : questionsList
+                "questions" : questionsList,
+                "random" : $(quizQuestionsListCheckbox).is(':checked')
             };
             return quizJSON;
         };
@@ -370,16 +372,20 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var renderQuiz = function(success, data) {
             if (success) {
                 json = data;
-                setQuiz(json);
+                setQuiz();
             }
         };
         
-        var setQuiz = function(json) {
-            $('#quiz_displaying').slickQuiz({"json": json, 
+        var setQuiz = function() {
+            var jsonTmp = {
+                "info" : json.info,
+                "questions" : json.questions
+            };
+            $('#quiz_displaying').slickQuiz({"json": jsonTmp, 
                                              "checkAnswerText": sakai.api.i18n.getValueForKey("CHECK_ANSWER_TEXT", "quiz"), 
                                              "nextQuestionText": sakai.api.i18n.getValueForKey("NEXT_QUESTION_TEXT", "quiz"),
                                              "backButtonText": sakai.api.i18n.getValueForKey("BACK_BUTTON_TEXT", "quiz"),
-                                             "randomSort":false});
+                                             "randomSort": json.random});
         };
 
         var fillSettings = function(success, data) {
@@ -394,6 +400,9 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 $(quizMainInformationsLevel4).val(json.info.level4);
                 $(quizMainInformationsLevel5).val(json.info.level5);
                 questionsList = json.questions;
+                if (json.random) {
+                    $(quizQuestionsListCheckbox).attr('checked', true);
+                }
                 renderQuestionsList();
                 enableElements($(quizSettingsCreateButton));
                 quizCanBeAdded = true;

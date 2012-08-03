@@ -84,19 +84,19 @@
 	border-collapse: collapse;
 	table-layout: fixed;	
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr {
 	height: 25px;
 	max-height: 25px;
 	table-layout:fixed;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr td,
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr th {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr td,
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr th {
 	border: 1px solid #A9A9A9;
 	height: 25px;
 	max-height: 25px;
 	table-layout: fixed;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr th {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr th {
 	background: #6ABCF6;
 	background: -webkit-linear-gradient(top, #D9E9F1 0%,#89D9FB 1%,#83D6F9 10%,#60C2EC 39%,#4FBEF1 48%,#4DC0F1 100%);
 	background: -moz-linear-gradient(center top , #D9E9F1 0%, #89D9FB 1%, #83D6F9 10%, #60C2EC 39%, #4FBEF1 48%, #4DC0F1 100%) repeat scroll 0 0 transparent;
@@ -106,21 +106,21 @@
     color: #666666;
     height: 28px;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr td {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr td {
 	background-color: white;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr #quiz_newquestion_th_option {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr #quiz_newquestion_th_option {
 	width: 80%;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr #quiz_newquestion_th_correct {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr #quiz_newquestion_th_correct {
 	width: 20%;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr .quiz_newquestion_checkbox_td {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr .quiz_newquestion_checkbox_td {
 	width: 100%;
 	height: 100%;
 	vertical-align: middle;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr td .quiz_newquestion_answer {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr td .quiz_newquestion_answer {
 	height: 25px;
 	max-height: 25px;
 	width: 100%;
@@ -128,14 +128,14 @@
 	padding: 0px;
 	border:none;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr .quiz_newquestion_checkbox_td .quiz_newquestion_checkbox_div {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr .quiz_newquestion_checkbox_td .quiz_newquestion_checkbox_div {
 	width: 25%;
 	height: 65%;
 	margin-left: auto;
 	margin-right: auto;
 	color: #666666;
 }
-#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table tr .quiz_newquestion_checkbox_td .quiz_newquestion_checkbox_div input {
+#quiz_settings #quiz_settings_questions #quiz_newquestion_container #quiz_newquestion_div #quiz_newquestion_form #quiz_newquestion_table_div #quiz_newquestion_table #quiz_newquestion_tablebody tr .quiz_newquestion_checkbox_td .quiz_newquestion_checkbox_div input {
 	float: none;
 	width: 15px;
 	height: 15px;
@@ -208,12 +208,32 @@
     border: 1px #a9a9a9 solid;
 }
 #quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_header {
-	background-color: #E5EAED;
+    display: inline-block;
+    background-color: #E5EAED;
 	border-radius: 5px 5px 0 0;
-	font-size: 12px;
 	height: 21px;
-	margin: 0px;
+	width: 222px;
 	padding: 10px 12px 5px;
+}
+#quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_header h2{
+	float: left;
+	margin: 0px;
+	font-size: 12px;
+}
+#quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_header #quiz_questionslist_form {
+    float: right; 
+    display: inline-block;
+    margin-left: 46px;
+}
+#quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_header #quiz_questionslist_form label {
+    float: left;
+    text-align: center;
+    font-size: 11px;
+    color: #666666;
+}
+#quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_header #quiz_questionslist_form input {
+    float: right;
+    margin-left: 3px;
 }
 #quiz_settings #quiz_settings_questions #quiz_questionslist_container #quiz_questionslist_createditems {
 	height: 407px;
@@ -325,19 +345,19 @@
 	border-collapse: collapse;
 	table-layout: fixed;	
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr {
 	height: 25px;
 	max-height: 25px;
 	table-layout:fixed;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr td,
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr th {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr td,
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr th {
 	border: 1px solid #A9A9A9;
 	height: 25px;
 	max-height: 25px;
 	table-layout: fixed;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr th {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr th {
 	background: #6ABCF6;
 	background: -webkit-linear-gradient(top, #D9E9F1 0%,#89D9FB 1%,#83D6F9 10%,#60C2EC 39%,#4FBEF1 48%,#4DC0F1 100%);
 	background: -moz-linear-gradient(center top , #D9E9F1 0%, #89D9FB 1%, #83D6F9 10%, #60C2EC 39%, #4FBEF1 48%, #4DC0F1 100%) repeat scroll 0 0 transparent;
@@ -347,21 +367,21 @@
     color: #666666;
     height: 28px;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr td {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr td {
 	background-color: white;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr #quiz_questiondetails_th_option {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr #quiz_questiondetails_th_option {
 	width: 80%;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr #quiz_questiondetails_th_correct {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr #quiz_questiondetails_th_correct {
 	width: 20%;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr .quiz_questiondetails_checkbox_td {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr .quiz_questiondetails_checkbox_td {
 	width: 100%;
 	height: 100%;
 	vertical-align: middle;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr td .quiz_questiondetails_answer {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr td .quiz_questiondetails_answer {
 	height: 25px;
 	max-height: 25px;
 	width: 100%;
@@ -369,14 +389,14 @@
 	padding: 0px;
 	border:none;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr .quiz_questiondetails_checkbox_td .quiz_questiondetails_checkbox_div {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr .quiz_questiondetails_checkbox_td .quiz_questiondetails_checkbox_div {
 	width: 25%;
 	height: 65%;
 	margin-left: auto;
 	margin-right: auto;
 	color: #666666;
 }
-#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table tr .quiz_questiondetails_checkbox_td .quiz_questiondetails_checkbox_div input {
+#quiz_settings #quiz_settings_questiondetails #quiz_questiondetails_container #quiz_questiondetails_form #quiz_questiondetails_table_div #quiz_questiondetails_table #quiz_questiondetails_tablebody tr .quiz_questiondetails_checkbox_td .quiz_questiondetails_checkbox_div input {
 	float: none;
 	width: 15px;
 	height: 15px;
@@ -483,7 +503,7 @@
 #quiz_displaying .quizArea:before, 
 #quiz_displaying .quizArea:after, 
 #quiz_displaying .quizResults:before, 
-#quiz_displaying.quizResults:after {
+#quiz_displaying .quizResults:after {
     content: "\0020";
     display: block;
 }
@@ -549,7 +569,6 @@
 #quiz_displaying .quizResults {
     margin-top: 20px;
     margin-left: 10px;
-    margin-bottom: 20px;
 }
 #quiz_displaying .quizResults .quizScore {
     font-size: 14px;

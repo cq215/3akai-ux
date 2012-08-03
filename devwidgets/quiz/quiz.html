@@ -111,7 +111,13 @@
             <button type="button" id="quiz_newquestion_raquo_right" class="s3d-button quiz_newquestion_addtolist" disabled="disabled" title="__MSG__ADD_QUESTION_TOLIST__"></button>
         </div>
         <div id="quiz_questionslist_container">
-            <h2 id="quiz_questionslist_header" class="s3d-bold">Questions list</h2>
+            <div id="quiz_questionslist_header">
+                <h2 class="s3d-bold">Questions list</h2>
+                <form id="quiz_questionslist_form">
+                    <label for="quiz_questionslist_checkbox" class="s3d-input-label s3d-input-label-above">__MSG__RANDOM_ORDER__:</label>
+                    <input type="checkbox" id="quiz_questionslist_checkbox" size="1"/>
+                </form>
+            </div>
             <div id="quiz_questionslist_createditems"></div>
         </div>
     </div>
