@@ -12,8 +12,8 @@
         },
     },
     "id": "quiz",
-    "img": "/devwidgets/quiz/images/googlemaps.png",
-    "imghover": "/devwidgets/quiz/images/googlemaps_hover.png",
+    "img": "/devwidgets/quiz/images/quiz.png",
+    "imghover": "/devwidgets/quiz/images/quiz_hover.png",
     "sakaidocs": true,
     "type": "sakai",
     "url": "/devwidgets/quiz/quiz.html"

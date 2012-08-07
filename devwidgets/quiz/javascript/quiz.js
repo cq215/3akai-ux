@@ -1,22 +1,22 @@
 /*
- * Licensed to the Sakai Foundation (SF) under one
- * or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership. The SF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- */
+* Licensed to the Sakai Foundation (SF) under one
+* or more contributor license agreements. See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership. The SF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License. You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied. See the License for the
+* specific language governing permissions and limitations under the License.
+*/
 
-// load the master sakai object to access all Sakai OAE API methods
+// load the master sakai object to access all Sakai OAE API methods and the quiz plugin
 require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/slickQuiz', 'jquery-ui'], function($, sakai) {
 
     /**
@@ -30,36 +30,30 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
      * @version 0.0.1
      * @param {String} tuid Unique id of the widget
      * @param {Boolean} showSettings Show the settings of the widget or not
+     * @param {Object} widgetData Save the data for the current tuid
      */
-    sakai_global.quiz = function (tuid, showSettings, widgetData) {
-    	/**
-         * Initialization function that is run when the widget is loaded. Determines
-         * which mode the widget is in (settings or main), loads the necessary data
-         * and shows the correct view.
-         */
+    sakai_global.quiz = function(tuid, showSettings, widgetData) {
+
         var questionsNumber = -1;
         var questionsList = [];
-        var minAnswersNumber = 1; 
+        var minAnswersNumber = 1;
         var answersNumber = minAnswersNumber;
         var answersNumberQuestionDetails = minAnswersNumber;
         var questionInModification = 0;
         var quizCanBeAdded = false;
         var questionCanBeSaved = false;
-        var questionCanBeModified = true;  
-        var json = false;   
-          
-        var rootel = "#" + tuid;   
+        var questionCanBeModified = true;
+        var json = false;
+
+        var rootel = '#' + tuid;
+
         //Node
-        var $quizNewQuestionForm = $('#quiz_newquestion_form', rootel);
         var $quizNewQuestionAddButton = $('#quiz_newquestion_add_button', rootel);
         var $quizNewQuestionRemoveButton = $('#quiz_newquestion_remove_button', rootel);
         var $quizNewQuestionAddToList = $('#quiz_newquestion_addtolist', rootel);
         var $quizNewQuestionRaquoRight = $('#quiz_newquestion_raquo_right', rootel);
-      	var $quizQuestionsListCreatedItems = $('#quiz_questionslist_createditems', rootel);
-        var $quizQuestionsListRemoveButton = $('.quiz_questionslist_remove_button', rootel);
-        var $quizSettingsQuestionDetails = $('#quiz_settings_questiondetails', rootel); 
-        var $quizQuestionDetailsClose = $('#quiz_questiondetails_close', rootel);
-        
+        var $quizQuestionsListCreatedItems = $('#quiz_questionslist_createditems', rootel);
+
         //Class
         var mainInformationsRequired = '.main_informations_required';
         var newQuestionRequired = '.newquestion_required';
@@ -71,9 +65,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var quizNewQuestionCheckbox = '.quiz_newquestion_checkbox';
         var quizQuestionsListDetailsButton = '.quiz_questionslist_details_button';
         var quizQuestionsListRemoveButton = '.quiz_questionslist_remove_button';
-        
-        //Id 
-        var quizMainInformationsForm = '#quiz_main_informations_form';
+
+        //Id
         var quizMainInformationsName = '#quiz_main_informations_name';
         var quizMainInformationsDescription = '#quiz_main_informations_description';
         var quizMainInformationsComment = '#quiz_main_informations_comment';
@@ -90,10 +83,8 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var quizNewQuestionAnswer_1 = '#quiz_newquestion_answer_1';
         var quizQuestionsListCheckbox = '#quiz_questionslist_checkbox';
         var quizQuestionsListItem = 'quiz_questionslist_item_';
-        var quizSettingsQuestionDetails = '#quiz_settings_questiondetails'; 
-        var quizQuestionDetailsContainer = '#quiz_questiondetails_container';
+        var quizSettingsQuestionDetails = '#quiz_settings_questiondetails';
         var quizQuestionDetailsClose = '#quiz_questiondetails_close';
-        var quizQuestionDetailsForm = '#quiz_questiondetails_form';
         var quizQuestionDetailsModify = '#quiz_questiondetails_modify';
         var quizQuestionDetailsTableBody = '#quiz_questiondetails_tablebody';
         var quizQuestionDetailsSaveModification = '#quiz_questiondetails_savemodification';
@@ -104,63 +95,79 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         var quizQuestionDetailsSaveDiv = '#quiz_questiondetails_savediv';
         var quizSettingsCreateButton = '#quiz_settings_create_button';
         var quizSettingsCancelButton = '#quiz_settings_cancel_button';
+        var quizSettingsView = '#quiz_settings';
+        var quizDisplayingView = '#quiz_displaying';
         
-        //Template 
+        //Template
         var quizNewQuestionAddNewAnswerTableTemplate = 'quiz_newquestion_add_newanswer_table_template';
         var quizQuestionsDetailsAddNewAnswerTableTemplate = 'quiz_questiondetails_add_newanswer_table_template';
         var quizQuestionsListTemplate = 'quiz_questionslist_template';
         var quizQuestionDetailsTemplate = 'quiz_questiondetails_template';
-        
-        //Container 
+
+        //Container's name
         var newQuestionContainer = 'newquestion';
         var questionDetailsContainer = 'questiondetails';
-        
-        
+
+
         /**
-         * Disable or enable elements
-         * can take a single or multivalue jQuery obj
+         * Enable an elements. It can take a single or multivalue jQuery obj.
+         * @param {Object} jQueryObj The object to enable.
          */
         var enableElements = function(jQueryObj) {
             jQueryObj.removeAttr('disabled');
             jQueryObj.removeClass(buttonDisabled);
         };
-
+        
+        
+        /**
+         * Disable an elements. It can take a single or multivalue jQuery obj.
+         * @param {Object} jQueryObj The object to disable.
+         */
         var disableElements = function(jQueryObj) {
             jQueryObj.attr('disabled', 'disabled');
             jQueryObj.addClass(buttonDisabled);
         };
         
+        
         /**
-         * Check if there is at least the question input and two answer inputs given by the user and check if they are valid
-         * @return {Boolean} true if there is at least the question input and two answer inputs given by the user and if they are valid
+         * Check if the question is valid before to be saved.
+         * A question is valid if at least the question input and two answer inputs have been filled by the user and are valid.
+         * @param {Boolean} isModified To know in which container we have to check. If true, in the questiondetails one. 
+         * @return {Boolean} True if the question can be saved.
          */
         var checkIfQuestionInputValid = function(isModified) {
             var container;
-            
+
             if (isModified) {
                 container = '#quiz_' + questionDetailsContainer;
-            }
-            else {
+            } else {
                 container = '#quiz_' + newQuestionContainer;
             }
-            
+
             var question = $(container + '_question', rootel).val();
             var answer0 = $($(container + '_answer_0', rootel).find('input[type=text]')[0]).val();
             var answer1 = $($(container + '_answer_1', rootel).find('input[type=text]')[0]).val();
-            
+
             // check if the user didn't just fill in some spaces
-            return (question.replace(/ /g, "") !== "" && answer0.replace(/ /g, "") !== "" && answer1.replace(/ /g, "") !== "" && checkIfOneAnswerChecked(container));
+            return (question.replace(/ /g, '') !== '' && answer0.replace(/ /g, '') !== '' && answer1.replace(/ /g, '') !== '' && checkIfOneAnswerChecked(container));
         };
         
+        
+        /**
+         * Check if there is at least one correct answer in all the possible ones.
+         * It means that there is at least one possible answer checked.
+         * @param {Boolean} container To know in which container we have to check.
+         * @return {Boolean} True if at least one possible answer has been checked.
+         */
         var checkIfOneAnswerChecked = function(container) {
             var rows = $(container + '_table', rootel).find('tr');
-            
-            for (var i = 1 ; i < rows.length ; i++) {
+
+            for (var i = 1; i < rows.length; i++) {
                 var answerInputs = $(rows[i], rootel).find('td');
                 var answerTextInput = $($(answerInputs[0], rootel).find('input')).val();
-                
+
                 if (checkIfAnswerValid(answerTextInput)) {
-                    if($($(answerInputs[1], rootel).find('input')).is(':checked')) {
+                    if ($($(answerInputs[1], rootel).find('input')).is(':checked')) {
                         return true;
                     }
                 }
@@ -168,6 +175,12 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             return false;
         };
         
+        
+        /**
+         * Check if the main informations about a quiz are valid.
+         * It's valid if all the inputs have been filled by the user and are valid.
+         * @return {Boolean} True if the main informations are valid.
+         */
         var checkIfMainInformationsInputValid = function() {
             var name = $(quizMainInformationsName, rootel).val();
             var description = $(quizMainInformationsDescription, rootel).val();
@@ -177,99 +190,118 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             var level3 = $(quizMainInformationsLevel3, rootel).val();
             var level4 = $(quizMainInformationsLevel4, rootel).val();
             var level5 = $(quizMainInformationsLevel5, rootel).val();
-            
+
             // check if the user didn't just fill in some spaces
-            return (name.replace(/ /g, "") !== "" 
-                    && description.replace(/ /g, "") !== ""     
-                    && comment.replace(/ /g, "") !== "" 
-                    && level1.replace(/ /g, "") !== "" 
-                    && level2.replace(/ /g, "") !== "" 
-                    && level3.replace(/ /g, "") !== "" 
-                    && level4.replace(/ /g, "") !== "" 
-                    && level5.replace(/ /g, "") !== "");
-        };
-               
-        var checkIfAnswerValid = function(answer) {
-            // check if the user didn't just fill in some spaces
-            return (answer.replace(/ /g, "") !== "");
+            return (name.replace(/ /g, '') !== '' && description.replace(/ /g, '') !== '' && comment.replace(/ /g, '') !== '' && level1.replace(/ /g, '') !== '' && level2.replace(/ /g, '') !== '' && level3.replace(/ /g, '') !== '' && level4.replace(/ /g, '') !== '' && level5.replace(/ /g, '') !== '');
         };
         
+        
+        /**
+         * Check if an answer input is valid.
+         * @param {Boolean} answer The answer to check.
+         * @return {Boolean} True if the answer is valid.
+         */
+        var checkIfAnswerValid = function(answer) {
+            // check if the user didn't just fill in some spaces
+            return (answer.replace(/ /g, '') !== '');
+        };
+        
+        
+        /**
+         * Build the JSON object for a question and add it in the array's questions.
+         * @param {int} index If an index is specified, the question will be stored at this index and replace question currently stored at this index. If not, the question will be stored at the end of the array.
+         */
         var constructQuestionToAdd = function(index) {
             var answersTable = [];
             var answerInputs;
             var answerTextInput;
             var answerCheckboxInput = false;
             var container;
-            
+
             if (index) {
-        	    container = '#quiz_' + questionDetailsContainer;
-            }
-            else {
+                container = '#quiz_' + questionDetailsContainer;
+            } else {
                 container = '#quiz_' + newQuestionContainer;
             }
             
             questionsNumber++;
             var rows = $(container + '_table', rootel).find('tr');
             var availableAnswers = 0;
-            
-            for (var i = 1 ; i < rows.length ; i++) {
+
+            // build the JSON for the possible answers' list
+            for (var i = 1; i < rows.length; i++) {
                 answerCheckboxInput = false;
                 answerInputs = $(rows[i], rootel).find('td');
                 answerTextInput = $($(answerInputs[0], rootel).find('input')).val();
-                
+
                 if (checkIfAnswerValid(answerTextInput)) {
-                    if($($(answerInputs[1], rootel).find('input')).is(':checked')) {
+                    if ($($(answerInputs[1], rootel).find('input')).is(':checked')) {
                         answerCheckboxInput = true;
                     }
                     answersTable[availableAnswers++] = {
-                        "option": answerTextInput,
-                        "correct" : answerCheckboxInput
+                        'option' : answerTextInput,
+                        'correct' : answerCheckboxInput
                     }
                 }
             }
-            
+
             var correctComment = $(container + '_correctcomment', rootel).val();
             var incorrectComment = $(container + '_incorrectcomment', rootel).val();
             
+            // if any correct or incorrect comment have been filled, default ones are added
             if (correctComment == '') {
-                correctComment = sakai.api.i18n.getValueForKey("DEFAULT_CORRECT_COMMENT", "quiz");
+                correctComment = sakai.api.i18n.getValueForKey('DEFAULT_CORRECT_COMMENT', 'quiz');
             }
             if (incorrectComment == '') {
-                incorrectComment = sakai.api.i18n.getValueForKey("DEFAULT_INCORRECT_COMMENT", "quiz");
+                incorrectComment = sakai.api.i18n.getValueForKey('DEFAULT_INCORRECT_COMMENT', 'quiz');
             }
-            
+
+            // the entire question is built
             var contentQuestion = {
-                "q" : $(container + '_question', rootel).val(),
-                "a" : answersTable,
-                "correct" : correctComment,
-                "incorrect" : incorrectComment
+                'q' : $(container + '_question', rootel).val(),
+                'a' : answersTable,
+                'correct' : correctComment,
+                'incorrect' : incorrectComment
             };
 
+            // store the question in the array
             if (index) {
                 questionsList[index] = contentQuestion;
-            }
-            else {
+            } else {
                 questionsList.push(contentQuestion);
             }
         };
-       
+        
+        
+        /**
+         * Check if a quiz is valid before to be added into a document.
+         * A quiz is valid if the main informations are valid and if there is at least one question into the list.
+         * If a quiz is valid, the add button is enable, else it remains disabled
+         */
         var checkIfQuizValid = function() {
             if (checkIfMainInformationsInputValid() && questionsList.length) {
                 enableElements($(quizSettingsCreateButton, rootel));
                 quizCanBeAdded = true;
-            } 
-            else {
-                if(quizCanBeAdded) {
+            } else {
+                if (quizCanBeAdded) {
                     disableElements($(quizSettingsCreateButton, rootel));
                     quizCanBeAdded = false;
                 }
             }
         };
-		
+        
+        
+        /**
+         * Inform the container that the settings modifications are finished. 
+         */
         var finish = function() {
             sakai.api.Widgets.Container.informFinish(tuid, 'quiz');
         };
         
+        
+        /**
+         * If a question can be add to the quiz, the JSON is built and the questions' list is up to date. 
+         */
         var addQuestionToList = function() {
             if (questionCanBeSaved) {
                 constructQuestionToAdd();
@@ -277,6 +309,10 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
         };
         
+        
+        /**
+         * The html of the questions's list is up to date by TemplateRender. 
+         */
         var renderQuestionsList = function() {
             var templateData = {
                 'questions' : questionsList
@@ -284,9 +320,11 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
 
             $quizQuestionsListCreatedItems.html(sakai.api.Util.TemplateRenderer(quizQuestionsListTemplate, templateData));
 
+            // listeners are deleted and then created to avoid multiple event catching 
             removeQuestionsListBinding();
             addQuestionsListBinding();
 
+            // the elements into the questions' list can be sort by the user 
             $(quizQuestionsListSortableList, rootel).sortable({
                 connectWith : quizQuestionsListSortableList,
                 revert : true,
@@ -297,7 +335,11 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 }
             });
         };
-          
+        
+        
+        /**
+         * After that an element has been moved into the questions' list, the array is up to date in order to keep the new list order.
+         */
         var actualizeQuestionList = function() {
             var tempList = [];
             var i = 0;
@@ -306,28 +348,36 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 tempList[i++] = questionsList[index];
             });
             questionsList = tempList;
-        };  
+        };
         
+        
+        /**
+         * Build the quiz JSON which can be understood by the SlickQuiz plugin. 
+         */
         var saveQuizToJSON = function() {
             var mainInformations = {
-                "name" : $(quizMainInformationsName, rootel).val(),
-                "main" : $(quizMainInformationsDescription, rootel).val(),
-                "results" : $(quizMainInformationsComment, rootel).val(),
-                "level1" : $(quizMainInformationsLevel1, rootel).val(),
-                "level2" : $(quizMainInformationsLevel2, rootel).val(),
-                "level3" : $(quizMainInformationsLevel3, rootel).val(),
-                "level4" : $(quizMainInformationsLevel4, rootel).val(),
-                "level5" : $(quizMainInformationsLevel5, rootel).val(),
+                'name' : $(quizMainInformationsName, rootel).val(),
+                'main' : $(quizMainInformationsDescription, rootel).val(),
+                'results' : $(quizMainInformationsComment, rootel).val(),
+                'level1' : $(quizMainInformationsLevel1, rootel).val(),
+                'level2' : $(quizMainInformationsLevel2, rootel).val(),
+                'level3' : $(quizMainInformationsLevel3, rootel).val(),
+                'level4' : $(quizMainInformationsLevel4, rootel).val(),
+                'level5' : $(quizMainInformationsLevel5, rootel).val(),
             };
 
             var quizJSON = {
-                "info" : mainInformations,
-                "questions" : questionsList,
-                "random" : $(quizQuestionsListCheckbox, rootel).is(':checked')
+                'info' : mainInformations,
+                'questions' : questionsList,
+                'random' : $(quizQuestionsListCheckbox, rootel).is(':checked')
             };
             return quizJSON;
         };
         
+        
+        /**
+         * The question form is reset after that a question has been saved. 
+         */
         var resetQuestionInputs = function() {
             $(quizNewQuestionQuestion, rootel).val('');
             $(quizNewQuestionCorrectComment, rootel).val('');
@@ -339,8 +389,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(quizNewQuestionTableBody, rootel).find('tr').each(function() {
                 if ($(this).attr('class') != cantBeDeleted) {
                     $(this).remove();
-                } 
-                else {
+                } else {
                     $($(quizNewQuestionAnswer_0, rootel).find('input[type=text]')[0]).val('');
                     $($(quizNewQuestionAnswer_1, rootel).find('input[type=text]')[0]).val('');
                     $($(this).find('input[type=checkbox]')[0]).attr('checked', false);
@@ -348,48 +397,61 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             });
             answersNumber = minAnswersNumber;
         };
-
+        
+        
+        /**
+         * The widget data are loaded. If settings are dispayed, all forms and list are filled ; else, the quiz is displaying. 
+         * @param {Boolean} settings True if the settings view is displaying.
+         */
         var getFromJCR = function(settings) {
             if (widgetData && widgetData.quiz) {
                 if (settings) {
                     fillSettings(true, widgetData.quiz);
-                } 
-                else {
+                } else {
                     renderQuiz(true, widgetData.quiz);
                 }
-            } 
-            else {
+            } else {
                 sakai.api.Widgets.loadWidgetData(tuid, function(success, data) {
                     if (settings) {
                         fillSettings(success, data);
-                    } 
-                    else {
+                    } else {
                         renderQuiz(success, data);
                     }
                 });
             }
         };
-
+        
+        
+        /**
+         * The quiz is interpreted and then displayed thanks to the SlickQuiz plugin.
+         * @param {Boolean} success True if the data have been successfully loaded.
+         * @param {Object} data The widget data. 
+         */
         var renderQuiz = function(success, data) {
             if (success) {
                 json = data;
-                setQuiz();
+                var jsonTmp = {
+                    'info' : json.info,
+                    'questions' : json.questions
+                };
+
+                // the quiz is displayed thanks to the SlickQuiz plugin with some specified options
+                $(rootel + ' #quiz_displaying').slickQuiz({
+                    'json' : jsonTmp,
+                    'checkAnswerText' : sakai.api.i18n.getValueForKey('CHECK_ANSWER_TEXT', 'quiz'),
+                    'nextQuestionText' : sakai.api.i18n.getValueForKey('NEXT_QUESTION_TEXT', 'quiz'),
+                    'backButtonText' : sakai.api.i18n.getValueForKey('BACK_BUTTON_TEXT', 'quiz'),
+                    'randomSort' : json.random
+                });
             }
         };
-        
-        var setQuiz = function() {
-            var jsonTmp = {
-                "info" : json.info,
-                "questions" : json.questions
-            };
-            
-            $(rootel + ' #quiz_displaying').slickQuiz({"json": jsonTmp, 
-                                             "checkAnswerText": sakai.api.i18n.getValueForKey("CHECK_ANSWER_TEXT", "quiz"), 
-                                             "nextQuestionText": sakai.api.i18n.getValueForKey("NEXT_QUESTION_TEXT", "quiz"),
-                                             "backButtonText": sakai.api.i18n.getValueForKey("BACK_BUTTON_TEXT", "quiz"),
-                                             "randomSort": json.random});
-        };
 
+
+        /**
+         * Forms and list into the settings view are filled with the widget data loaded.
+         * @param {Boolean} success True if the data have been successfully loaded.
+         * @param {Object} data The widget data. 
+         */
         var fillSettings = function(success, data) {
             if (success) {
                 json = data;
@@ -410,57 +472,85 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 quizCanBeAdded = true;
             }
         };
-
+        
+        
+        /**
+         * Add binding for the required inputs in the question form.
+         */
         var addNewQuestionRequiredBinding = function() {
             $(newQuestionRequired, rootel).bind('keyup', newQuestionRequiredEvent);
             $(quizNewQuestionCheckbox, rootel).bind('click', newQuestionRequiredEvent);
         };
         
+        /**
+         * Remove binding for the required inputs in the question form.
+         */
         var removeNewQuestionRequiredBinding = function() {
             $(newQuestionRequired, rootel).unbind('keyup', newQuestionRequiredEvent);
             $(quizNewQuestionCheckbox, rootel).unbind('click', newQuestionRequiredEvent);
         };
         
+        /**
+         * Add binding for the questions' list.
+         */
         var addQuestionsListBinding = function() {
-           $(quizQuestionsListDetailsButton, rootel).bind('click', showQuestionDetailsEvent);
-           $(quizQuestionsListRemoveButton, rootel).bind('click', removeQuestionEvent);
+            $(quizQuestionsListDetailsButton, rootel).bind('click', showQuestionDetailsEvent);
+            $(quizQuestionsListRemoveButton, rootel).bind('click', removeQuestionEvent);
         };
         
+        /**
+         * Remove binding for the questions' list.
+         */
         var removeQuestionsListBinding = function() {
-           $(quizQuestionsListDetailsButton, rootel).unbind('click', showQuestionDetailsEvent);
-           $(quizQuestionsListRemoveButton, rootel).unbind('click', removeQuestionEvent);
+            $(quizQuestionsListDetailsButton, rootel).unbind('click', showQuestionDetailsEvent);
+            $(quizQuestionsListRemoveButton, rootel).unbind('click', removeQuestionEvent);
         };
         
+        /**
+         * Add binding for the the general elements into the question's details view.
+         */
         var addQuestionDetailsGeneralBinding = function() {
             $(quizQuestionDetailsClose, rootel).bind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify, rootel).bind('click', modifyEvent); 
-            $(quizQuestionDetailsSaveModification, rootel).bind('click', saveModificationEvent); 
-            $(quizQuestionDetailsCancelModification, rootel).bind('click', cancelModificationEvent); 
+            $(quizQuestionDetailsModify, rootel).bind('click', modifyEvent);
+            $(quizQuestionDetailsSaveModification, rootel).bind('click', saveModificationEvent);
+            $(quizQuestionDetailsCancelModification, rootel).bind('click', cancelModificationEvent);
             $(quizQuestionDetailsAddButton, rootel).bind('click', questionDetailsAddAnswerEvent);
             $(quizQuestionDetailsRemoveButton, rootel).bind('click', questionDetailsRemoveAnswerEvent);
         };
         
+        /**
+         * Remove binding for the the general elements into the question's details view.
+         */
         var removeQuestionDetailsGeneralBinding = function() {
             $(quizQuestionDetailsClose, rootel).unbind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify, rootel).unbind('click', modifyEvent); 
-            $(quizQuestionDetailsSaveModification, rootel).unbind('click', saveModificationEvent); 
-            $(quizQuestionDetailsCancelModification, rootel).unbind('click', cancelModificationEvent); 
+            $(quizQuestionDetailsModify, rootel).unbind('click', modifyEvent);
+            $(quizQuestionDetailsSaveModification, rootel).unbind('click', saveModificationEvent);
+            $(quizQuestionDetailsCancelModification, rootel).unbind('click', cancelModificationEvent);
             $(quizQuestionDetailsAddButton, rootel).unbind('click', questionDetailsAddAnswerEvent);
             $(quizQuestionDetailsRemoveButton, rootel).unbind('click', questionDetailsRemoveAnswerEvent);
         };
         
+        /**
+         * Add binding for the the specific elements into the question's details view.
+         */
         var addQuestionDetailsSpecificBinding = function() {
             $(questionDetailsRequired, rootel).bind('keyup', modifyQuestionRequiredEvent);
             $(quizQuestionDetailsCheckbox, rootel).bind('click', modifyQuestionRequiredEvent);
         };
         
+        /**
+         * Remove binding for the the specific elements into the question's details view.
+         */
         var removeQuestionDetailsSpecificBinding = function() {
             $(questionDetailsRequired, rootel).unbind('keyup', modifyQuestionRequiredEvent);
             $(quizQuestionDetailsCheckbox, rootel).unbind('click', modifyQuestionRequiredEvent);
         };
         
+        /**
+         * Add binding for the static elements into the settings view.
+         */
         var addGeneralBinding = function() {
-            $(mainInformationsRequired, rootel).bind('keyup', mainInformationsRequiredEvent); 
+            $(mainInformationsRequired, rootel).bind('keyup', mainInformationsRequiredEvent);
             addNewQuestionRequiredBinding();
             $quizNewQuestionAddButton.bind('click', addAnswerEvent);
             $quizNewQuestionRemoveButton.bind('click', removeAnswerEvent);
@@ -470,6 +560,9 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(quizSettingsCreateButton, rootel).bind('click', createButtonEvent);
         };
         
+        /**
+         * Remove binding for the static elements into the settings view.
+         */
         var removeGeneralBinding = function() {
             $(mainInformationsRequired, rootel).unbind('keyup', mainInformationsRequiredEvent);
             removeNewQuestionRequiredBinding();
@@ -481,17 +574,23 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(quizSettingsCreateButton, rootel).unbind('click', createButtonEvent);
         };
         
+        /**
+         *  After a keyup, the validity of the quiz is checked.
+         */
         var mainInformationsRequiredEvent = function() {
             checkIfQuizValid();
         };
         
+        /**
+         * After a keyup, the validity of a question is checked.
+         * If the question is valid, the add buttons are enabled, else it remain disabled.
+         */
         var newQuestionRequiredEvent = function() {
             if (checkIfQuestionInputValid(false)) {
                 enableElements($quizNewQuestionAddToList);
                 enableElements($quizNewQuestionRaquoRight);
                 questionCanBeSaved = true;
-            } 
-            else {
+            } else {
                 if (questionCanBeSaved) {
                     disableElements($quizNewQuestionAddToList);
                     disableElements($quizNewQuestionRaquoRight);
@@ -500,17 +599,23 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
         };
         
+        /**
+         * After a click, a row in possible answers table is added and the listeners on the inputs are up to date.
+         */
         var addAnswerEvent = function() {
             answersNumber++;
             var templateData = {
                 'answersNumber' : answersNumber
             };
             $(quizNewQuestionTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizNewQuestionAddNewAnswerTableTemplate, templateData));
-            
+
             removeNewQuestionRequiredBinding();
             addNewQuestionRequiredBinding();
         };
         
+        /**
+         * After a click, the last row in possible answers table is removed.
+         */
         var removeAnswerEvent = function() {
             if (answersNumber > minAnswersNumber) {
                 answersNumber--;
@@ -519,12 +624,18 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
         };
         
+        /**
+         * After a click, the question is added into the list, the question form is reset and we check if the quiz can be created.
+         */
         var addToListEvent = function() {
             addQuestionToList();
             checkIfQuizValid();
             resetQuestionInputs();
         };
-          
+        
+        /**
+         * After a click, the question's details view is displayed by TamplateRender and listeners are up to date
+         */
         var showQuestionDetailsEvent = function() {
             var parentId = $(this).parent()[0].id;
             var index = parentId.split(quizQuestionsListItem)[1];
@@ -533,13 +644,16 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             answersNumberQuestionDetails = templateData.a.length - 1;
             $(quizSettingsQuestionDetails, rootel).show();
             $(quizSettingsQuestionDetails, rootel).html(sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData));
-            
+
             removeQuestionDetailsGeneralBinding();
             removeQuestionDetailsSpecificBinding();
             addQuestionDetailsGeneralBinding();
             addQuestionDetailsSpecificBinding();
         };
-       
+        
+        /**
+         * After a click, the selected question is removed.
+         */
         var removeQuestionEvent = function() {
             var index = $(this).parent()[0].id.split(quizQuestionsListItem)[1];
             questionsList.splice(index, 1);
@@ -547,11 +661,18 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             renderQuestionsList();
             checkIfQuizValid();
         };
-       
+        
+        /**
+         * After a click, the question's details view is closed.
+         */
         var questionDetailsCloseEvent = function() {
             $(quizSettingsQuestionDetails, rootel).hide();
         };
-
+        
+        /**
+         * After a click, the form inputs into the question's details view are enabled and the question can be mofidy. 
+         * Listeners are up to date.
+         */
         var modifyEvent = function() {
             $(this).parent().parent().find('input').each(function() {
                 enableElements($(this));
@@ -564,7 +685,10 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(quizQuestionDetailsModifyDiv, rootel).hide();
             $(quizQuestionDetailsSaveDiv, rootel).show();
         };
-
+        
+        /**
+         * After a click, if the modifications are valid, it can be saved. Then the question's details view is closed.
+         */
         var saveModificationEvent = function() {
             if (questionCanBeModified) {
                 constructQuestionToAdd(questionInModification);
@@ -572,22 +696,31 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
                 $(quizSettingsQuestionDetails, rootel).hide();
             }
         };
-            
+        
+        /**
+         * After a click, the question's details view is closed without saving the modifications.
+         */
         var cancelModificationEvent = function() {
             $(quizSettingsQuestionDetails, rootel).hide();
         };
         
+        /**
+         * After a click, a row is added in the possible answers table
+         */
         var questionDetailsAddAnswerEvent = function() {
             answersNumberQuestionDetails++;
             var templateData = {
                 'answersNumber' : answersNumberQuestionDetails
             };
             $(quizQuestionDetailsTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizQuestionsDetailsAddNewAnswerTableTemplate, templateData));
-            
+
             removeQuestionDetailsSpecificBinding();
             addQuestionDetailsSpecificBinding();
         };
         
+        /**
+         * After a click, the last row in the possible answers table is removed.
+         */
         var questionDetailsRemoveAnswerEvent = function() {
             if (answersNumberQuestionDetails > minAnswersNumber) {
                 answersNumberQuestionDetails--;
@@ -596,13 +729,15 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
         };
         
+        /**
+         * After a keyup, the validity of the modification is checked.
+         * If the question is still valid, the save buttons remains enabled, else it is disabled.
+         */
         var modifyQuestionRequiredEvent = function() {
-            // enable the save button
             if (checkIfQuestionInputValid(true)) {
                 enableElements($(quizQuestionDetailsSaveModification, rootel));
                 questionCanBeModified = true;
-            } 
-            else {
+            } else {
                 if (questionCanBeModified) {
                     disableElements($(quizQuestionDetailsSaveModification, rootel));
                     questionCanBeModified = false;
@@ -610,35 +745,45 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             }
         };
         
+        /**
+         * After a click, the settings view is closed and the quiz is not added into the document.
+         */
         var cancelButtonEvent = function() {
             sakai.api.Widgets.Container.informCancel(tuid, 'quiz');
         };
         
+        /**
+         * After a click, the widget data are saved and the quiz is added into the document.
+         */
         var createButtonEvent = function() {
             json = saveQuizToJSON();
             sakai.api.Widgets.saveWidgetData(tuid, json, finish);
         };
-
+        
+        
         var doInit = function(show) {
             if (show) {
+                // up to date the listeners to avoid multiple event catching
                 removeGeneralBinding();
                 addGeneralBinding();
+                // if data have already been saved, they are loaded and diplayed
                 getFromJCR(true);
-        	    renderQuestionsList();
-                // Show the search input textfield and save, search, cancel buttons
-                $('#quiz_settings', rootel).show();
-                $('#quiz_displaying', rootel).hide();
-            }
-            else {
-                $('#quiz_settings', rootel).hide();
-                $('#quiz_displaying', rootel).show();
+                renderQuestionsList();
+                // settings view is displayed
+                $(quizSettingsView, rootel).show();
+                $(quizDisplayingView, rootel).hide();
+            } else {
+                // the quiz is displayed
+                $(quizSettingsView, rootel).hide();
+                $(quizDisplayingView, rootel).show();
+                // the quiz is built with the saved data
                 getFromJCR(false);
             }
         };
-
+        
         // run the initialization function when the widget object loads
         doInit(showSettings);
-	};
-	
-	sakai.api.Widgets.widgetLoader.informOnLoad('quiz');
+    };
+
+    sakai.api.Widgets.widgetLoader.informOnLoad('quiz');
 });

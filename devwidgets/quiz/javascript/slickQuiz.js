@@ -14,6 +14,7 @@ require(['jquery'], function (jQuery) {
                 randomSort: false
             }, options);
     
+            // Select the html child elements for a precise tuid    
             var selector = rootel + ' #' + $(element).attr('id');
     
             var triggers = {
@@ -157,6 +158,7 @@ require(['jquery'], function (jQuery) {
                     });
                 },
                 
+                // Start the quiz a new time
                 restartQuiz: function(restartButton) {
                     $(targets.quizResults).fadeOut(300, function(){
                        $(targets.quizArea).fadeIn(500);
@@ -341,7 +343,7 @@ require(['jquery'], function (jQuery) {
                 // Setup quiz
                 plugin.method.setupQuiz();
                 
-                //Unbind and die the previous triggers
+                //Unbind or die the previous triggers to avoid multiple event catching
                 $(triggers.starter).unbind('click');
                 $(triggers.restarter).unbind('click');
                 $(triggers.checker).die('click');
