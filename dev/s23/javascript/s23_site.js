@@ -401,6 +401,7 @@ sakai_global.s23_site = function(){
             $(window).trigger("sakai.entity.init", ["s23site", "", {
                 "title": sakai.api.Security.saneHTML(completeJSON.site.title)
             }]);
+            
             $('.icon-sakai-help').die('click');
             $('.icon-sakai-help').live('click', function(ev) {
                 ev.preventDefault();
