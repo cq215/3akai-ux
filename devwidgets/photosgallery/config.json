@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "hasSettings": true,
+    "i18n": {
+        "default": {
+            "bundle": "/devwidgets/photosgallery/bundles/default.properties",
+            "description": "Photos Gallery",
+            "name": "Photos Gallery"
+        },
+        "fr_FR": {
+            "bundle": "/devwidgets/photosgallery/bundles/fr_FR.properties"
+        },
+    },
+    "id": "photosgallery",
+    "img": "/devwidgets/photosgallery/images/quiz.png",
+    "imghover": "/devwidgets/photosgallery/images/quiz_hover.png",
+    "sakaidocs": true,
+    "type": "sakai",
+    "url": "/devwidgets/photosgallery/photosgallery.html"
+}
