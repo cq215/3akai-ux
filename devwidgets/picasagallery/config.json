@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "hasSettings": true,
+    "i18n": {
+        "default": {
+            "bundle": "/devwidgets/picasagallery/bundles/default.properties",
+            "description": "Picasa Gallery",
+            "name": "Picasa Gallery"
+        },
+        "fr_FR": {
+            "bundle": "/devwidgets/picasagallery/bundles/fr_FR.properties"
+        },
+    },
+    "id": "picasagallery",
+    "img": "/devwidgets/picasagallery/images/picasagallery.png",
+    "imghover": "/devwidgets/picasagallery/images/picasagallery_hover.png",
+    "sakaidocs": true,
+    "type": "sakai",
+    "url": "/devwidgets/picasagallery/picasagallery.html"
+}

@@ -1,0 +1,263 @@
+#picasagallery_settings #picasagallery_settings_maininformations #picasagallery_maininformations_form #picasagallery_maininformations_iddiv {
+    display: inline-block;
+    width: 100%;
+    margin-top: 15px;
+}
+#picasagallery_settings #picasagallery_settings_maininformations #picasagallery_maininformations_form #picasagallery_maininformations_iddiv span {
+    margin-left: 54px;
+    margin-top: -6px;
+    width: 67%;
+}
+#picasagallery_settings #picasagallery_settings_maininformations #picasagallery_maininformations_form #picasagallery_maininformations_iddiv label {
+    clear: left;
+    float: left;
+    width: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#picasagallery_settings #picasagallery_settings_maininformations #picasagallery_maininformations_form #picasagallery_maininformations_iddiv #picasagallery_maininformations_name {
+    float: left;
+    width: 67%;
+}
+#picasagallery_settings #picasagallery_settings_maininformations #picasagallery_maininformations_form #picasagallery_maininformations_iddiv #picasagallery_maininformations_search {
+    float: right;
+    width: auto;
+    margin-top: -2px;
+}
+#picasagallery_settings #picasagallery_settings_albums {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #a9a9a9;
+    height: auto;
+    padding: 15px 15px 15px 15px;
+    border-radius: 5px 5px 5px 5px;
+}
+#picasagallery_settings #picasagallery_settings_albums #quiz_albums_form {
+    display: block;
+}
+#picasagallery_settings #picasagallery_settings_albums #quiz_albums_form #picasagallery_albums_title {
+    width: 100%;
+    margin-top: 5px;
+    height: 22px;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_settings_msg_selectalbum {
+    margin-top: 50px;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations {
+    width: 100%;
+    display: inline-block;
+    margin-top: 10px;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations img {
+    width: 30%;
+    float: left;
+    box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 5px #888;
+    margin-right: 16px;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations #picasagallery_albums_table {
+    table-layout: fixed;
+    float: right;
+    margin-top: -6px;
+    width: 67%;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations #picasagallery_albums_table tr th, 
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations #picasagallery_albums_table tr td {
+    table-layout: fixed;
+    text-align: left;
+    padding: 8px;
+    word-wrap: break-word;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations #picasagallery_albums_table tr th {
+    width: 30%;
+}
+#picasagallery_settings #picasagallery_settings_albums #picasagallery_albums_informations #picasagallery_albums_table tr td {
+    width: 70%;
+}
+
+#picasagallery_displaying {
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    height: 400px;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist {
+    float: left;
+    border-right: 1px solid #a9a9a9;
+    height: 100%;
+    overflow: hidden;
+    width: 15%;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_upbutton {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: -3px;
+    width: 21px;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_upbutton #picasagallery_displaying_updiv #picasagallery_displaying_uptag {
+    display: inline-block;
+    width: 21px;
+    height: 20px;
+    background: url("/devwidgets/picasagallery/images/raquo_up.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_upbutton:hover #picasagallery_displaying_updiv #picasagallery_displaying_uptag {
+    background: url("/devwidgets/picasagallery/images/raquo_up_active.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_list {
+    height: 290px;
+    overflow: hidden;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_list .picasagallery_displaying_item {
+    list-style: none outside none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 3px;
+    width: 72px;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_list .picasagallery_displaying_item .picasagallery_displaying_itemlink {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+    overflow-y: hidden;
+    width: 72px;
+    line-height: 35px;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_list .picasagallery_displaying_item .picasagallery_displaying_itemlink img {
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+    width: 100%;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_downbutton {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+    margin-top: 5px;
+    width: 21px;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_downbutton #picasagallery_displaying_downdiv #picasagallery_displaying_downtag {
+    display: inline-block;
+    width: 21px;
+    height: 20px;
+    background: url("/devwidgets/picasagallery/images/raquo_down.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_divlist #picasagallery_displaying_downbutton:hover #picasagallery_displaying_downdiv #picasagallery_displaying_downtag {
+    background: url("/devwidgets/picasagallery/images/raquo_down_active.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow {
+    float: right;
+    display: block;
+    height: 100%;
+    width: 84.5%;
+    overflow: hidden;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_imgcontainer {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    width: 512px;
+    height: 355px;
+    line-height: 355px;
+    text-align: center;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_imgcontainer #picasagallery_displaying_divimg {
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px 4px #888;
+    -moz-box-shadow: 0 0 10px 4px #888;
+    -webkit-box-shadow: 0 0 10px 4px #888;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_imgcontainer #picasagallery_displaying_divimg img {
+    margin-top: -1px;
+    vertical-align: middle;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_imgcontainer #picasagallery_displaying_msg_notfound {
+    display: inline-block;
+    vertical-align: middle;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons {
+    margin-left: auto;
+    margin-right: auto;
+    width: 162px;
+    height: 35px;
+    margin-top: 7px;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton {
+    display: inline-block;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_previousbutton {
+    float: left;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_previousbutton #picasagallery_displaying_previousdiv #picasagallery_displaying_previoustag {
+    display: inline-block;
+    width: 21px;
+    height: 18px;
+    background: url("/devwidgets/picasagallery/images/raquo_left.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_previousbutton:hover #picasagallery_displaying_previousdiv #picasagallery_displaying_previoustag {
+    background: url("/devwidgets/picasagallery/images/raquo_left_active.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv {
+    width: 120px;
+    float: left;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton {
+    margin-left: auto;
+    margin-right: auto;
+    width: 19px;
+    display: block;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton #picasagallery_displaying_playdiv {
+    margin-left: auto;
+    margin-right: auto;
+    width: 11px;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton #picasagallery_displaying_playdiv #picasagallery_displaying_playtag {
+    display: inline-block;
+    width: 11px;
+    height: 18px;
+    background: url("/devwidgets/picasagallery/images/play_button.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton:hover #picasagallery_displaying_playdiv #picasagallery_displaying_playtag {
+    background: url("/devwidgets/picasagallery/images/play_button_active.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton #picasagallery_displaying_stopdiv {
+    margin-left: auto;
+    margin-right: auto;
+    width: 19px;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton #picasagallery_displaying_stopdiv #picasagallery_displaying_stoptag {
+    display: inline-block;
+    width: 19px;
+    height: 18px;
+    background: url("/devwidgets/picasagallery/images/stop_button.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_playstopdiv #picasagallery_displaying_playstopbutton:hover #picasagallery_displaying_stopdiv #picasagallery_displaying_stoptag {
+    background: url("/devwidgets/picasagallery/images/stop_button_active.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_nextbutton {
+    float: right;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_nextbutton #picasagallery_displaying_nextdiv #picasagallery_displaying_nexttag {
+    display: inline-block;
+    width: 21px;
+    height: 18px;
+    background: url("/devwidgets/picasagallery/images/raquo_right.png") no-repeat top left transparent;
+}
+#picasagallery_displaying #picasagallery_displaying_slideshow #picasagallery_displaying_buttons #picasagallery_displaying_divbutton #picasagallery_displaying_nextbutton:hover #picasagallery_displaying_nextdiv #picasagallery_displaying_nexttag {
+    background: url("/devwidgets/picasagallery/images/raquo_right_active.png") no-repeat top left transparent;
+}
+
+
+
