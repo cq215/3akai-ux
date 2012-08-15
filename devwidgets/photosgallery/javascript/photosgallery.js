@@ -39,6 +39,10 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         var photosList = [];
         var selectedAlbum;
         var diaporama;
+        var updownAnim;
+        var marginMax = 0;
+        var previousWidth = 0;
+        var firstClick = true;
         
         //Class
         var buttonDisabled = 's3d-disabled';
@@ -50,6 +54,7 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         var photosGalleryDisplaying = '#photosgallery_displaying';
         var photosGallerySettingsCancelButton = '#photosgallery_settings_cancelbutton';
         var photosGallerySettingsCreateButton = '#photosgallery_settings_createbutton';
+        var photosGalleryMainInformationsIdDiv = '#photosgallery_maininformations_iddiv';
         var photosGalleryMainInformationsSearch = '#photosgallery_maininformations_search';
         var photosGalleryMainInformationsName = '#photosgallery_maininformations_name';
         var photosGalleryAlbumsTitle = '#photosgallery_albums_title';
@@ -63,6 +68,7 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         var photosGalleryDisplayingPlayStopButton = '#photosgallery_displaying_playstopbutton';
         var photosGalleryDisplayingNextButton = '#photosgallery_displaying_nextbutton';
         var photosGalleryDisplayingImg = 'photosgallery_displaying_img_';
+        var photosGalleryDisplayingMsgNotFound = '#photosgallery_displaying_msg_notfound';
         var photosGalleryDisplayingPlayDiv = '#photosgallery_displaying_playdiv';
         var photosGalleryDisplayingStopDiv = '#photosgallery_displaying_stopdiv';
         var photosGalleryDisplayingUpButton = '#photosgallery_displaying_upbutton';
@@ -71,14 +77,26 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         //Template
         var photosGallerySettingsFillSelectTemplate = 'photosgallery_settings_fillselect_template';
         var photosGallerySettingsFillTableTemplate = 'photosgallery_settings_filltable_template';
+        var photosGallerySettingsDisplayErrorTemplate = 'photosgallery_settings_displayerror_template';
         var photosGalleryDisplayingFillListTemplate = 'photosgallery_displaying_filllist_template';
         var photosGalleryDisplayingFillSlideshowTemplate = 'photosgallery_displaying_fillslideshow_template';
         
+        
+        /**
+         * Send a request by the proxy to get the albums list for the specified user ID. 
+         * If the userId doesn't exist, an error message will be displayed.
+         * If there is a response from the server, the albums list is displayed with some information about each one.
+         * Only public albums will be included into the response.
+         * @param {String} userId The user ID of a Picasa Web account.
+         */
         var getAlbumsList = function(userId) {
+            $($(photosGalleryMainInformationsIdDiv, rootel).find('span')[0]).remove();
+            $(photosGalleryMainInformationsName, rootel).removeClass(' s3d-error');
             var albumsURL = 'http://localhost:8080/var/proxy/photosgallery/albumsPicasa.json?userID=' + userId;
             $.ajax({
                 type : "GET",
                 url : albumsURL,
+                cache : false,
                 dataType : "xml",
                 headers : {
                     'GData-Version': 2  
@@ -90,68 +108,110 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
                     albumsList = [];
                     if ($(entries).length > 0) { 
                         entries.each(function(){
-                            var album = {
-                                'idalbum' : $(this).find('gphoto\\:id').text(),
-                                'iduser' : userId,
-                                'title': $(this).find('title').text(),
-                                'summary': $(this).find('summary').text(),
-                                'location': $(this).find('gphoto\\:location').text(),
-                                'numphotos': $(this).find('gphoto\\:numphotos').text(),
-                                'updated': $(this).find('updated').text().split('T')[0],
-                                'imgurl' : $(this).find('media\\:group').find('media\\:content').attr('url')
+                            var namespacePhoto = 'gphoto\\:';
+                            var namespaceMedia = 'media\\:';
+                            var idElement = $(this).find( namespacePhoto + 'id' )[0];
+                            
+                            if (idElement === undefined) {
+                                namespacePhoto = '';
+                                namespaceMedia = '';
+                                idElement = $(this).find( namespacePhoto + 'id' )[0];
                             }
+                            var idAlbumTab = $(idElement).text().split('/');
+                            var locationElement = $(this).find( namespacePhoto + 'location' )[0];
+                            var numphotosElement = $(this).find( namespacePhoto + 'numphotos' )[0];
+                            var imgurlElement = $($(this).find(namespaceMedia + 'group')[0]).find(namespaceMedia + 'content')[0];
+                            
+                            var album = {
+                                'idalbum' : idAlbumTab[idAlbumTab.length-1],
+                                'iduser' : userId,
+                                'title': $($(this).find('title')[0]).text(),
+                                'summary': $($(this).find('summary')[0]).text(),
+                                'location': $(locationElement).text(),
+                                'numphotos': $(numphotosElement).text(),
+                                'updated': $($(this).find('updated')[0]).text().split('T')[0],
+                                'imgurl' : $(imgurlElement).attr('url')
+                            }
+                            
                             albumsList.push(album);
                             if (firstTime) {
                                 selectedAlbum = album;
                                 firstTime = false;
                             }
                         });
-                    }
-                    fillAlbumsList();
+                        fillAlbumsList();
+                   }
                 },
-                statusCode: { // displaying a message for each kind of error
+                statusCode: { 
                     404: function() {
-                        alert(userId + ' n\'existe pas !');
+                        //If the user ID is not found by Picasa server, the user is prevented
+                        $(photosGalleryMainInformationsIdDiv, rootel).prepend(sakai.api.Util.TemplateRenderer(photosGallerySettingsDisplayErrorTemplate, {}));
+                        $(photosGalleryMainInformationsName, rootel).addClass('s3d-error');
+                        $(photosGalleryAlbumsTitle, rootel).html('');
+                        $(photosGalleryAlbumsInformations, rootel).hide();
+                        $(photosGallerySettingsMsgSelectAlbum, rootel).show();
+                        disableElements($(photosGalleryMainInformationsSearch, rootel));
+                        disableElements($(photosGallerySettingsCreateButton, rootel));
                     }
                 }
             });
-        }
+        };
         
         
+        /**
+         * Send a request by the proxy to get the content of a given album owned by the specified user ID. 
+         * If the album doesn't exist, an error message will be displayed.
+         * If there is a response from the server, the album's content is displayed into a list
+         * @param {String} userId The user Id of a Picasa Web account
+         * @param {String} albumId The album Id of the displayed album
+         */
         var getPhotosList = function(userId, albumId) {
             var albumsURL = 'http://localhost:8080/var/proxy/photosgallery/photosPicasa.json?userID=' + userId + '&albumID=' + albumId;
             $.ajax({
                 type : "GET",
                 url : albumsURL,
+                cache : false,
                 dataType : "xml",
                 headers : {
-                    'GData-Version': 2  
+                    'GData-Version' : 2
                 },
                 success : function(mainData, status, data) {
                     var response = data.responseXML;
                     var entries = $(response).find('entry');
                     photosList = [];
-                    if ($(entries).length > 0) { 
+                    if($(entries).length > 0) {
                         entries.each(function() {
+                            var namespacePhoto = 'gphoto\\:';
+                            var namespaceMedia = 'media\\:';
+                            var idElement = $(this).find(namespacePhoto + 'id')[0];
+                            if(idElement === undefined) {
+                                namespacePhoto = '';
+                                namespaceMedia = '';
+                                idElement = $(this).find(namespacePhoto + 'id')[0];
+                            }
+                            var iconurlElement = $($(this).find(namespaceMedia + 'group')[0]).find(namespaceMedia + 'thumbnail')[1];
+                            var imgurlElement = $($(this).find(namespaceMedia + 'group')[0]).find(namespaceMedia + 'content')[0];
                             var photo = {
-                                'id' : $(this).find('gphoto\\:id').text(),
-                                'title': $(this).find('title').text().split('.')[0],
-                                'updated': $(this).find('updated').text().split('T')[0],
-                                'iconurl' : $(this).find('media\\:group').find('media\\:thumbnail[height=48]').attr('url'),
-                                'imgurl' : $(this).find('media\\:group').find('media\\:content').attr('url')
+                                'id' : $(idElement).text(),
+                                'title' : $(this).find('title').text().split('.')[0],
+                                'updated' : $(this).find('updated').text().split('T')[0],
+                                'iconurl' : $(iconurlElement).attr('url'),
+                                'imgurl' : $(imgurlElement).attr('url'),
+                                'width' : $(imgurlElement).attr('width'),
+                                'height' : $(imgurlElement).attr('height')
                             }
                             photosList.push(photo);
                         });
+                        fillPhotosList();
                     }
-                    fillPhotosList();
                 },
-                statusCode: { // displaying a message for each kind of error
-                    404: function() {
-                        alert(userId + ' n\'existe pas !');
+                statusCode : {
+                    404 : function() {
+                        $(photosGalleryDisplayingMsgNotFound, rootel).show();
                     }
                 }
             });
-        }
+        };
         
         
         var fillAlbumsList = function() {
@@ -173,17 +233,46 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
             photoRender(0);
         };
         
+  
+        var setMarginMax = function() {
+            $(photosGalleryDisplayingList, rootel).find('li').each(function() {
+                marginMax = marginMax + $($(this).find('img')[0]).height();
+            });
+        };
+        
         var photoRender = function(index) {
-            $(photosGalleryDisplayingDivImg, rootel).hide();
-            var templateData = {
-                'photo' : photosList[index],
-                'index' : index
-            };
-            $(photosGalleryDisplayingDivImg, rootel).html(sakai.api.Util.TemplateRenderer(photosGalleryDisplayingFillSlideshowTemplate, templateData));
-            $(photosGalleryDisplayingDivImg, rootel).fadeIn(2000);
+            $(photosGalleryDisplayingDivImg, rootel).slideUp(500).fadeOut(1000, function() {
+                var templateData = {
+                    'photo' : photosList[index],
+                    'index' : index
+                };
+                $(photosGalleryDisplayingDivImg, rootel).html(sakai.api.Util.TemplateRenderer(photosGalleryDisplayingFillSlideshowTemplate, templateData));
+                photoCssUpdate(index);
+                $(photosGalleryDisplayingDivImg, rootel).slideUp(1000).delay(300).fadeIn(1500);
+            });
         };
 
-      
+        var photoCssUpdate = function(index) {
+             var photo = photosList[index];
+             var width =  photo.width;
+             var height =  photo.height;
+             var maxWidth = 780;
+             var maxHeight = 342;
+             if(width > maxWidth) {
+                 height = height * (maxWidth/Width);
+                 width = maxWidth;
+                 $(photosGalleryDisplayingDivImg + ' img', rootel).css('width', width + 'px');
+             }
+             if(height > maxHeight) {
+                 width = width * (maxHeight/height);
+                 height = maxHeight;
+                 $(photosGalleryDisplayingDivImg + ' img', rootel).css('height', height + 'px');
+             }
+             $(photosGalleryDisplayingDivImg, rootel).css('width', width-2 + 'px');
+             $(photosGalleryDisplayingDivImg, rootel).css('height', height-2 + 'px');
+             $(photosGalleryDisplayingDivImg, rootel).css('line-height', height-2 + 'px');
+        }
+        
         /**
          * Enable an elements. It can take a single or multivalue jQuery obj.
          * @param {Object} jQueryObj The object to enable.
@@ -268,17 +357,17 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         
         
         var addMainViewBinding = function() {
+            $(photosGalleryDisplayingItemClass, rootel).hover(hoverInEvent, hoverOutEvent);
             $(photosGalleryDisplayingItemLink, rootel).on('click', displayPhotoEvent);
-            $(photosGalleryDisplayingUpButton, rootel).on('click', goUpEvent);
-            $(photosGalleryDisplayingDownButton, rootel).on('click', goDownEvent);
+            $(photosGalleryDisplayingUpButton, rootel).on('mousedown', goUpEvent);
+            $(photosGalleryDisplayingUpButton, rootel).on('mouseup', stopGoUpEvent);
+            $(photosGalleryDisplayingDownButton, rootel).on('mousedown', goDownEvent);
+            $(photosGalleryDisplayingDownButton, rootel).on('mouseup',stopGoDownEvent);
             $(photosGalleryDisplayingPreviousButton, rootel).on('click', previousPhotoEvent);
             $(photosGalleryDisplayingPlayStopButton, rootel).on('click', playStopEvent);
             $(photosGalleryDisplayingNextButton, rootel).on('click', nextPhotoEvent);
         };
         
-        var removeMainViewBinding = function() {
-            
-        }; 
         
         /**
          * Add binding for the static elements into the settings view.
@@ -291,12 +380,6 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
             $(photosGallerySettingsCreateButton, rootel).on('click', createButtonEvent);
         };
         
-        /**
-         * Remove binding for the static elements into the settings view.
-         */
-        var removeGeneralBinding = function() {
-        };
-        
         var checkIdInput = function() {
             if(checkIfInputValid($(photosGalleryMainInformationsName, rootel).val())) {
                 enableElements($(photosGalleryMainInformationsSearch, rootel));
@@ -305,7 +388,7 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
             }
         };
         
-        var  searchButtonEvent = function() {
+        var searchButtonEvent = function() {
             var id = $(photosGalleryMainInformationsName, rootel).val();
             if (checkIfInputValid(id)) {
                 getAlbumsList(id);
@@ -339,17 +422,20 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
             if (index > 0) {
                 photoRender(index-1);
             }
+            else {
+                photoRender(photosList.length-1);
+            }
         };
         
         var playStopEvent = function() {
-            if ($(photosGalleryDisplayingPlayStopButton).find(photosGalleryDisplayingPlayDiv).css("display")==="none") {
-                $(photosGalleryDisplayingStopDiv).hide();
-                $(photosGalleryDisplayingPlayDiv).show();
+            if ($(photosGalleryDisplayingPlayStopButton, rootel).find(photosGalleryDisplayingPlayDiv).css("display")==="none") {
+                $(photosGalleryDisplayingStopDiv, rootel).hide();
+                $(photosGalleryDisplayingPlayDiv, rootel).show();
                 clearInterval(diaporama);
                 diaporama = undefined;
             } else {
-                $(photosGalleryDisplayingPlayDiv).hide();
-                $(photosGalleryDisplayingStopDiv).show();
+                $(photosGalleryDisplayingPlayDiv, rootel).hide();
+                $(photosGalleryDisplayingStopDiv, rootel).show();
                 diaporama = setInterval(function(){nextPhotoEvent()}, 5000);
             }
             
@@ -362,25 +448,80 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
             if (index < photosList.length-1) {
                 photoRender(index+1);
             } else {
-                if(diaporama !== undefined) {
-                    clearInterval(diaporama);
-                    diaporama = undefined;
-                }
+                photoRender(0);
             }
         };
         
         var goUpEvent = function() {
-            var previousMargin = parseInt($('#' + photosGalleryDisplayingItem + '0').css('margin-top').split('px')[0]);
+            if(updownAnim !== undefined) {
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
+            updownAnim = setInterval(function(){goUp()}, 1); 
+        };
+        
+        var goUp = function() {
+            var previousMargin = parseInt($('#' + photosGalleryDisplayingItem + '0', rootel).css('margin-top').split('px')[0]);
             if (previousMargin < 0) {
-                $('#' + photosGalleryDisplayingItem + '0').css('margin-top', previousMargin + 10 + 'px');
-            } 
+                $('#' + photosGalleryDisplayingItem + '0', rootel).css('margin-top', previousMargin + 7 + 'px');
+            }
+            else{
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
+        };
+        
+        var stopGoUpEvent = function() {
+            if (updownAnim !== undefined) {
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
         };
         
         var goDownEvent = function() {
-            var previousMargin = parseInt($('#' + photosGalleryDisplayingItem + '0').css('margin-top').split('px')[0]);
-            $('#' + photosGalleryDisplayingItem + '0').css('margin-top', previousMargin - 10 + 'px'); 
+            if (firstClick) {
+                firstClick = false;
+                setMarginMax();
+            }
+            if(updownAnim !== undefined) {
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
+            updownAnim = setInterval(function(){goDown()}, 1); 
         };
         
+        var goDown = function() {
+            var previousMargin = parseInt($('#' + photosGalleryDisplayingItem + '0', rootel).css('margin-top').split('px')[0]);
+            if ((previousMargin * (-1)) < marginMax) {
+                 $('#' + photosGalleryDisplayingItem + '0', rootel).css('margin-top', previousMargin - 7 + 'px'); 
+            }
+            else {
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
+        };
+        
+        var stopGoDownEvent = function() {
+            if (updownAnim !== undefined) {
+                clearInterval(updownAnim);
+                updownAnim = undefined;
+            }
+        };
+        
+        var hoverInEvent = function() {
+            var currentLink = $(this).find('a');
+            $(this).css('width', '86px');
+            $(this).css('height', currentLink.height() + 'px');
+            previousWidth = currentLink.width();
+            currentLink.css('height', currentLink.height());
+            currentLink.css('width', previousWidth + previousWidth*0.12 + 'px');
+        }; 
+        
+        var hoverOutEvent = function() {
+            $(this).css('width', '72px');
+            $(this).find('a').css('width', previousWidth + 'px');
+        };
+         
         /**
          * After a click, the settings view is closed and the quiz is not added into the document.
          */
@@ -401,7 +542,6 @@ require(['jquery', 'sakai/sakai.api.core'], function($, sakai) {
         var doInit = function(show) {
             if (show) {
                 // up to date the listeners to avoid multiple event catching
-                removeGeneralBinding();
                 addGeneralBinding();
                 // if data have already been saved, they are loaded and diplayed
                 getFromJCR(true);

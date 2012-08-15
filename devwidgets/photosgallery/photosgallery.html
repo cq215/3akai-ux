@@ -1,32 +1,32 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/devwidgets/photosgallery/css/photosgallery.css" />
 
-<!-- MAIN VIEW -->
+<!-- SETTINGS VIEW -->
 <div id="photosgallery_settings" class="fl-widget-content s3d-widget-content" style="display: none;">
     <div id="photosgallery_settings_maininformations">
         <form id="photosgallery_maininformations_form" class="s3d-form-field-wrapper">
             <div id="photosgallery_maininformations_iddiv">
-                <label for="photosgallery_maininformations_name" class="s3d-input-label s3d-input-label-above">__MSG__USERID__:</label><br/>
+                <label for="photosgallery_maininformations_name" class="s3d-input-label s3d-input-label-above">__MSG__USERID__:</label>
                 <input type="text" id="photosgallery_maininformations_name" class="maininformations_required" placeholder="__MSG__ENTER_A_USERID__"/>
-                <button type="button" class="s3d-button s3d-header-button" id="photosgallery_maininformations_search" disabled="disabled" title="__MSG__SEARCH_ALBUMS__">
+                <div><button type="button" class="s3d-button s3d-header-button" id="photosgallery_maininformations_search" disabled="disabled" title="__MSG__SEARCH_ALBUMS__">
                     __MSG__SEARCH_ALBUMS__
-                </button>
+                </button></div>
             </div>
         </form>
     </div>
     <div id="photosgallery_settings_albums">
         <form id="quiz_albums_form" class="s3d-form-field-wrapper">
-            <label for="photosgallery_albums_title" class="s3d-input-label s3d-input-label-above">__MSG__CHOOSE_ALBUM__:</label><br/>
-            <select id="photosgallery_albums_title">
-            </select>
+            <label for="photosgallery_albums_title" class="s3d-input-label s3d-input-label-above">__MSG__CHOOSE_ALBUM__:</label><br />
+            <select id="photosgallery_albums_title"></select>
         </form>
         <div class="s3d-no-results-container" id="photosgallery_settings_msg_selectalbum">
             <div class="s3d-no-results-arrow-up"></div>
             <div class="s3d-no-results-icon s3d-no-results-search-content"></div>
-            <p>__MSG__SELECT_AN_ALBUM__</p>
+            <p>
+                __MSG__SELECT_AN_ALBUM__
+            </p>
         </div>
-        <div id="photosgallery_albums_informations" style="display: none;">
-        </div>        
+        <div id="photosgallery_albums_informations" style="display: none;"></div>
     </div>
     <!-- The submit and cancel button -->
     <div class="fl-force-right">
@@ -39,18 +39,19 @@
     </div>
 </div>
 
+
 <!-- MAIN VIEW -->
 <div id="photosgallery_displaying" class="fl-widget-content s3d-widget-content" style="display:none;">
     <div id="photosgallery_displaying_divlist">
-        <button type="button" class="s3d-button s3d-link-button s3d-action" id="photosgallery_displaying_upbutton" title="__MSG__PLAY__">
+        <button type="button" class="s3d-button s3d-link-button s3d-action" id="photosgallery_displaying_upbutton" title="__MSG__UP__">
             <div id="photosgallery_displaying_updiv">
                 <span id="photosgallery_displaying_uptag"></span>
             </div>
         </button>
-        <hr class="s3d-split-line">
+        <hr class="s3d-split-line" />
         <ul id="photosgallery_displaying_list"></ul>
-        <hr class="s3d-split-line">
-        <button type="button" class="s3d-button s3d-link-button s3d-action" id="photosgallery_displaying_downbutton" title="__MSG__PLAY__">
+        <hr class="s3d-split-line" />
+        <button type="button" class="s3d-button s3d-link-button s3d-action" id="photosgallery_displaying_downbutton" title="__MSG__DOWN__">
             <div id="photosgallery_displaying_downdiv">
                 <span id="photosgallery_displaying_downtag"></span>
             </div>
@@ -59,6 +60,13 @@
     <div id="photosgallery_displaying_slideshow">
         <div id="photosgallery_displaying_imgcontainer">
             <div id="photosgallery_displaying_divimg" style="display: none"></div>
+            <div class="s3d-no-results-container" id="photosgallery_displaying_msg_notfound" style="display: none">
+                <div class="s3d-no-results-arrow-up"></div>
+                <div class="s3d-no-results-icon s3d-no-results-search-content"></div>
+                <p>
+                    __MSG__ALBUM_NOT_FOUND__
+                </p>
+            </div>
         </div>
         <div id="photosgallery_displaying_buttons">
             <div id="photosgallery_displaying_divbutton">
@@ -86,35 +94,34 @@
         </div>
     </div>
 </div>
-
 <div id="photosgallery_settings_fillselect_template"  style="display:none;"><!--
     {if options.length}
-        {for option in options}
-            <option value="photosgallery_albums_title_option_${option_index}">${option.title}</option>
+        {for myoption in options} 
+            <option value="photosgallery_albums_title_option_${myoption_index}"> ${myoption.title} </option>
         {/for}
-    {/if}
+    {/if} 
 --></div>
 
 <div id="photosgallery_settings_filltable_template"  style="display:none;"><!--
     <img src="${album.imgurl}" alt="Album's icon" />
-    <table id="photosgallery_albums_table">
-        <tbody id="photosgallery_albums_tablebody">
-            <tr id="photosgallery_albums_title">
-                <th class="photosgallery_albums_th"> __MSG__SUMMARY__: </th>
-                <td class="photosgallery_albums_td"> ${album.summary} </td>
-            </tr>
-            <tr id="photosgallery_albums_localisation">
-                <th class="photosgallery_albums_th"> __MSG__LOCATION__: </th>
-                <td class="photosgallery_albums_td"> ${album.location} </td>
-            </tr>
-            <tr id="photosgallery_albums_title">
-                <th class="photosgallery_albums_th"> __MSG__NUMPHOTOS__: </th>
-                <td class="photosgallery_albums_td"> ${album.numphotos} </td>
-            </tr>
-            <tr id="photosgallery_albums_title">
-                <th class="photosgallery_albums_th"> __MSG__UPDATED__: </th>
-                <td class="photosgallery_albums_td"> ${album.updated} </td>
-            </tr>
+        <table id="photosgallery_albums_table">
+            <tbody id="photosgallery_albums_tablebody">
+                <tr id="photosgallery_albums_title">
+                    <th class="photosgallery_albums_th"> __MSG__SUMMARY__: </th>
+                    <td class="photosgallery_albums_td"> ${album.summary} </td>
+                </tr>
+                <tr id="photosgallery_albums_localisation">
+                    <th class="photosgallery_albums_th"> __MSG__LOCATION__: </th>
+                    <td class="photosgallery_albums_td"> ${album.location} </td>
+                </tr>
+                <tr id="photosgallery_albums_title">
+                    <th class="photosgallery_albums_th"> __MSG__NUMPHOTOS__: </th>
+                    <td class="photosgallery_albums_td"> ${album.numphotos} </td>
+                </tr>
+                <tr id="photosgallery_albums_title">
+                    <th class="photosgallery_albums_th"> __MSG__UPDATED__: </th>
+                    <td class="photosgallery_albums_td"> ${album.updated} </td>
+                </tr>
         </tbody>
     </table>
 --></div>
@@ -122,14 +129,19 @@
 <div id="photosgallery_displaying_filllist_template" style="display: none;"><!--
     {if photos.length}
         {for photo in photos}
-            <li id="photosgallery_displaying_item_${photo_index}" class="photosgallery_displaying_item"><a class="photosgallery_displaying_itemlink" href="#"><img src="${photo.iconurl}" /></a></li>
+            <li id="photosgallery_displaying_item_${photo_index}" class="photosgallery_displaying_item" >
+                <a class="photosgallery_displaying_itemlink" href="#"><img src="${photo.iconurl}" /></a>
+            </li>
         {/for}
     {/if}
 --></div>
 
-
 <div id="photosgallery_displaying_fillslideshow_template" style="display: none;"><!--
-        <img id="photosgallery_displaying_img_${index}" src="${photo.imgurl}" alt="${photo.title}"/>
+    <img id="photosgallery_displaying_img_${index}" src="${photo.imgurl}" alt="${photo.title}" /> 
+--></div>
+
+<div id="photosgallery_settings_displayerror_template" style="display: none;"><!--
+    <span for="photosgallery_maininformations_name" class="s3d-error">__MSG__INVALID_USERID__</span>
 --></div>
 
 <!-- JAVASCRIPT -->

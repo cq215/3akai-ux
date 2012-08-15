@@ -12,8 +12,8 @@
         },
     },
     "id": "photosgallery",
-    "img": "/devwidgets/photosgallery/images/quiz.png",
-    "imghover": "/devwidgets/photosgallery/images/quiz_hover.png",
+    "img": "/devwidgets/photosgallery/images/photosgallery.png",
+    "imghover": "/devwidgets/photosgallery/images/photosgallery.png",
     "sakaidocs": true,
     "type": "sakai",
     "url": "/devwidgets/photosgallery/photosgallery.html"
