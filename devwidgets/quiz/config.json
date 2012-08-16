@@ -8,7 +8,7 @@
             "name": "Quiz"
         },
         "fr_FR": {
-            "bundle": "/devwidgets/mycontacts/bundles/fr_FR.properties"
+            "bundle": "/devwidgets/quiz/bundles/fr_FR.properties"
         },
     },
     "id": "quiz",

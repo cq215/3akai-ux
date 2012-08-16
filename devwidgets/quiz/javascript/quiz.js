@@ -17,7 +17,7 @@
 */
 
 // load the master sakai object to access all Sakai OAE API methods and the quiz plugin
-require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/slickQuiz', 'jquery-ui'], function($, sakai) {
+require(['jquery', 'sakai/sakai.api.core', '/devwidgets/quiz/javascript/slickQuiz.js', 'jquery-ui'], function($, sakai) {
 
     /**
      * @name sakai_global.quiz
@@ -320,8 +320,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
 
             $quizQuestionsListCreatedItems.html(sakai.api.Util.TemplateRenderer(quizQuestionsListTemplate, templateData));
 
-            // listeners are deleted and then created to avoid multiple event catching 
-            removeQuestionsListBinding();
+            // listeners are created for event catching 
             addQuestionsListBinding();
 
             // the elements into the questions' list can be sort by the user 
@@ -478,101 +477,56 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
          * Add binding for the required inputs in the question form.
          */
         var addNewQuestionRequiredBinding = function() {
-            $(newQuestionRequired, rootel).bind('keyup', newQuestionRequiredEvent);
-            $(quizNewQuestionCheckbox, rootel).bind('click', newQuestionRequiredEvent);
+            $(newQuestionRequired, rootel).on('keyup', newQuestionRequiredEvent);
+            $(quizNewQuestionCheckbox, rootel).on('click', newQuestionRequiredEvent);
         };
         
-        /**
-         * Remove binding for the required inputs in the question form.
-         */
-        var removeNewQuestionRequiredBinding = function() {
-            $(newQuestionRequired, rootel).unbind('keyup', newQuestionRequiredEvent);
-            $(quizNewQuestionCheckbox, rootel).unbind('click', newQuestionRequiredEvent);
-        };
-        
+       
         /**
          * Add binding for the questions' list.
          */
         var addQuestionsListBinding = function() {
-            $(quizQuestionsListDetailsButton, rootel).bind('click', showQuestionDetailsEvent);
-            $(quizQuestionsListRemoveButton, rootel).bind('click', removeQuestionEvent);
+            $(quizQuestionsListDetailsButton, rootel).on('click', showQuestionDetailsEvent);
+            $(quizQuestionsListRemoveButton, rootel).on('click', removeQuestionEvent);
         };
-        
-        /**
-         * Remove binding for the questions' list.
-         */
-        var removeQuestionsListBinding = function() {
-            $(quizQuestionsListDetailsButton, rootel).unbind('click', showQuestionDetailsEvent);
-            $(quizQuestionsListRemoveButton, rootel).unbind('click', removeQuestionEvent);
-        };
+
         
         /**
          * Add binding for the the general elements into the question's details view.
          */
         var addQuestionDetailsGeneralBinding = function() {
-            $(quizQuestionDetailsClose, rootel).bind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify, rootel).bind('click', modifyEvent);
-            $(quizQuestionDetailsSaveModification, rootel).bind('click', saveModificationEvent);
-            $(quizQuestionDetailsCancelModification, rootel).bind('click', cancelModificationEvent);
-            $(quizQuestionDetailsAddButton, rootel).bind('click', questionDetailsAddAnswerEvent);
-            $(quizQuestionDetailsRemoveButton, rootel).bind('click', questionDetailsRemoveAnswerEvent);
+            $(quizQuestionDetailsClose, rootel).on('click', questionDetailsCloseEvent);
+            $(quizQuestionDetailsModify, rootel).on('click', modifyEvent);
+            $(quizQuestionDetailsSaveModification, rootel).on('click', saveModificationEvent);
+            $(quizQuestionDetailsCancelModification, rootel).on('click', cancelModificationEvent);
+            $(quizQuestionDetailsAddButton, rootel).on('click', questionDetailsAddAnswerEvent);
+            $(quizQuestionDetailsRemoveButton, rootel).on('click', questionDetailsRemoveAnswerEvent);
         };
         
-        /**
-         * Remove binding for the the general elements into the question's details view.
-         */
-        var removeQuestionDetailsGeneralBinding = function() {
-            $(quizQuestionDetailsClose, rootel).unbind('click', questionDetailsCloseEvent);
-            $(quizQuestionDetailsModify, rootel).unbind('click', modifyEvent);
-            $(quizQuestionDetailsSaveModification, rootel).unbind('click', saveModificationEvent);
-            $(quizQuestionDetailsCancelModification, rootel).unbind('click', cancelModificationEvent);
-            $(quizQuestionDetailsAddButton, rootel).unbind('click', questionDetailsAddAnswerEvent);
-            $(quizQuestionDetailsRemoveButton, rootel).unbind('click', questionDetailsRemoveAnswerEvent);
-        };
         
         /**
          * Add binding for the the specific elements into the question's details view.
          */
         var addQuestionDetailsSpecificBinding = function() {
-            $(questionDetailsRequired, rootel).bind('keyup', modifyQuestionRequiredEvent);
-            $(quizQuestionDetailsCheckbox, rootel).bind('click', modifyQuestionRequiredEvent);
+            $(questionDetailsRequired, rootel).on('keyup', modifyQuestionRequiredEvent);
+            $(quizQuestionDetailsCheckbox, rootel).on('click', modifyQuestionRequiredEvent);
         };
         
-        /**
-         * Remove binding for the the specific elements into the question's details view.
-         */
-        var removeQuestionDetailsSpecificBinding = function() {
-            $(questionDetailsRequired, rootel).unbind('keyup', modifyQuestionRequiredEvent);
-            $(quizQuestionDetailsCheckbox, rootel).unbind('click', modifyQuestionRequiredEvent);
-        };
         
         /**
          * Add binding for the static elements into the settings view.
          */
         var addGeneralBinding = function() {
-            $(mainInformationsRequired, rootel).bind('keyup', mainInformationsRequiredEvent);
+            $(mainInformationsRequired, rootel).on('keyup', mainInformationsRequiredEvent);
             addNewQuestionRequiredBinding();
-            $quizNewQuestionAddButton.bind('click', addAnswerEvent);
-            $quizNewQuestionRemoveButton.bind('click', removeAnswerEvent);
-            $quizNewQuestionRaquoRight.bind('click', addToListEvent);
-            $quizNewQuestionAddToList.bind('click', addToListEvent);
-            $(quizSettingsCancelButton, rootel).bind('click', cancelButtonEvent);
-            $(quizSettingsCreateButton, rootel).bind('click', createButtonEvent);
+            $quizNewQuestionAddButton.on('click', addAnswerEvent);
+            $quizNewQuestionRemoveButton.on('click', removeAnswerEvent);
+            $quizNewQuestionRaquoRight.on('click', addToListEvent);
+            $quizNewQuestionAddToList.on('click', addToListEvent);
+            $(quizSettingsCancelButton, rootel).on('click', cancelButtonEvent);
+            $(quizSettingsCreateButton, rootel).on('click', createButtonEvent);
         };
         
-        /**
-         * Remove binding for the static elements into the settings view.
-         */
-        var removeGeneralBinding = function() {
-            $(mainInformationsRequired, rootel).unbind('keyup', mainInformationsRequiredEvent);
-            removeNewQuestionRequiredBinding();
-            $quizNewQuestionAddButton.unbind('click', addAnswerEvent);
-            $quizNewQuestionRemoveButton.unbind('click', removeAnswerEvent);
-            $quizNewQuestionRaquoRight.unbind('click', addToListEvent);
-            $quizNewQuestionAddToList.unbind('click', addToListEvent);
-            $(quizSettingsCancelButton, rootel).unbind('click', cancelButtonEvent);
-            $(quizSettingsCreateButton, rootel).unbind('click', createButtonEvent);
-        };
         
         /**
          *  After a keyup, the validity of the quiz is checked.
@@ -609,7 +563,6 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             };
             $(quizNewQuestionTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizNewQuestionAddNewAnswerTableTemplate, templateData));
 
-            removeNewQuestionRequiredBinding();
             addNewQuestionRequiredBinding();
         };
         
@@ -634,7 +587,7 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
         };
         
         /**
-         * After a click, the question's details view is displayed by TamplateRender and listeners are up to date
+         * After a click, the question's details view is displayed by TemplateRender and listeners are up to date
          */
         var showQuestionDetailsEvent = function() {
             var parentId = $(this).parent()[0].id;
@@ -645,8 +598,6 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             $(quizSettingsQuestionDetails, rootel).show();
             $(quizSettingsQuestionDetails, rootel).html(sakai.api.Util.TemplateRenderer(quizQuestionDetailsTemplate, templateData));
 
-            removeQuestionDetailsGeneralBinding();
-            removeQuestionDetailsSpecificBinding();
             addQuestionDetailsGeneralBinding();
             addQuestionDetailsSpecificBinding();
         };
@@ -714,7 +665,6 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
             };
             $(quizQuestionDetailsTableBody, rootel).append(sakai.api.Util.TemplateRenderer(quizQuestionsDetailsAddNewAnswerTableTemplate, templateData));
 
-            removeQuestionDetailsSpecificBinding();
             addQuestionDetailsSpecificBinding();
         };
         
@@ -757,14 +707,13 @@ require(['jquery', 'sakai/sakai.api.core', '../../devwidgets/quiz/javascript/sli
          */
         var createButtonEvent = function() {
             json = saveQuizToJSON();
-            sakai.api.Widgets.saveWidgetData(tuid, json, finish);
+            sakai.api.Widgets.saveWidgetData(tuid, json, finish, true);
         };
         
         
         var doInit = function(show) {
             if (show) {
-                // up to date the listeners to avoid multiple event catching
-                removeGeneralBinding();
+                // up to date the listeners for event catching
                 addGeneralBinding();
                 // if data have already been saved, they are loaded and diplayed
                 getFromJCR(true);

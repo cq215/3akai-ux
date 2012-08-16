@@ -342,43 +342,33 @@ require(['jquery'], function (jQuery) {
             plugin.init = function() {
                 // Setup quiz
                 plugin.method.setupQuiz();
-                
-                //Unbind or die the previous triggers to avoid multiple event catching
-                $(triggers.starter).unbind('click');
-                $(triggers.restarter).unbind('click');
-                $(triggers.checker).die('click');
-                $(triggers.back).die('click');
-                $(triggers.next).die('click');
-                
+         
                 // Bind "start" button
-                $(triggers.starter).bind('click', function(e) {
+               $(triggers.starter).on('click', function(e) {
                     e.preventDefault();
                     plugin.method.startQuiz(this);
-                });
-                
+                }); 
+                               
                 // Bind "restart" button
-                $(triggers.restarter).bind('click', function(e) {
+               $(triggers.restarter).on('click', function(e) {
                     e.preventDefault();
                     plugin.method.restartQuiz(this);
                 });
     
-                // Using 'live' instead of 'bind' since these triggers are generated
-                // on the fly in setupQuiz and thus won't be available on page load
-    
                 // Bind "submit answer" button
-                $(triggers.checker).live('click', function(e) {
+               $(triggers.checker).on('click', function(e) {
                     e.preventDefault();
                     plugin.method.checkAnswer(this);
                 });
     
                 // Bind "back" button
-                $(triggers.back).live('click', function(e) {
+               $(triggers.back).on('click', function(e) {
                     e.preventDefault();
                     plugin.method.backToQuestion(this);
                 });
     
                 // Bind "next question" button
-                $(triggers.next).live('click', function(e) {
+               $(triggers.next).on('click', function(e) {
                     e.preventDefault();
                     plugin.method.nextQuestion(this);
                 });
